@@ -88,7 +88,6 @@ class PortalLoginConfig(object):
             pass
 
     def login(self):
-
         self.isAnnuncement()
         self.sendUserInfo(self.account, self.password)
         self.parsingPageSourceAndSaveImageSendCode(self.filepath)
@@ -231,18 +230,21 @@ class PortalLoginConfig(object):
         time.sleep(3)
 
 
-# class GameHall(PortalLoginConfig):
-#
-#     def goAPfish(self):
-#         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-#         AP_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[5]')  # AP金蟾捕鱼
-#         ActionChains(self.driver).move_to_element(lobby_fish).click(AP_fish).perform()
-#         time.sleep(12)
-#         self.switch_window()
-#         time.sleep(2)
-#         ActionChains(self.driver).move_by_offset(0, 0).click().perform() # 點擊0.1元炮場
-#         time.sleep(4)
-#         for j in range(3):
-#             ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
-#             time.sleep(0.5)
-#         time.sleep(10)
+class GameHall(PortalLoginConfig):
+
+    def __init__(self):
+        super(GameHall, self).__init__()
+
+    def goAPfish(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        AP_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[5]')  # AP金蟾捕鱼
+        ActionChains(self.driver).move_to_element(lobby_fish).click(AP_fish).perform()
+        time.sleep(12)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform() # 點擊0.1元炮場
+        time.sleep(4)
+        for j in range(3):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
+            time.sleep(0.5)
+        time.sleep(10)
