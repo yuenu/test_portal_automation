@@ -13,8 +13,8 @@ class PortalLoginConfig(object):
     def __init__(self):
         self.driver = webdriver.Chrome()
         self.windowSize = self.driver.set_window_size(1080, 800)
-        self.account = 'yuenu002'
-        self.password = 's24930479'
+        self.account = 'your_account'
+        self.password = 'your_password'
         self.filepath = f'./recaptcha/captcha.png'
 
     def isAnnuncement(self):
