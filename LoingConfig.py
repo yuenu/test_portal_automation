@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from idenitfy import idenitfy_img
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
 
@@ -13,8 +14,9 @@ class PortalLoginConfig(object):
     def __init__(self):
         self.driver = webdriver.Chrome()
         self.windowSize = self.driver.set_window_size(1080, 800)
-        self.account = 'your_account'
-        self.password = 'your_password'
+        self.urlLink = self.driver.get('http://www.fnjtd.com/')
+        self.account = 'yuenu002'
+        self.password = 's24930479'
         self.filepath = f'./recaptcha/captcha.png'
 
     def isAnnuncement(self):
@@ -86,7 +88,7 @@ class PortalLoginConfig(object):
             pass
 
     def login(self):
-        self.driver.get('http://www.fnjtd.com/')
+
         self.isAnnuncement()
         self.sendUserInfo(self.account, self.password)
         self.parsingPageSourceAndSaveImageSendCode(self.filepath)
@@ -115,6 +117,42 @@ class PortalLoginConfig(object):
         time.sleep(10)
         self.driver.close()
         self.switch_window()
+        time.sleep(3)
+
+    def goFGbird(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        FG_bird = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[2]/li[4]')  # FG捕鸟达人
+        ActionChains(self.driver).move_to_element(lobby_fish).click(FG_bird).perform()
+        time.sleep(12)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform() # 點擊"0.1倍場"
+        time.sleep(4)
+        for j in range(5):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
+            time.sleep(0.8)
+        time.sleep(10)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
+    def goFGfish(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        FG_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[1]/li[4]')  # FG美人捕鱼
+        ActionChains(self.driver).move_to_element(lobby_fish).click(FG_fish).perform()
+        time.sleep(12)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform() # 點擊"0.1倍場"
+        time.sleep(4)
+        ActionChains(self.driver).move_by_offset(850, -190).click().perform()  # Close "x"
+        for j in range(5):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
+            time.sleep(0.8)
+        time.sleep(10)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
 
     def goGPKfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
@@ -131,6 +169,7 @@ class PortalLoginConfig(object):
         time.sleep(10)
         self.driver.close()
         self.switch_window()
+        time.sleep(3)
 
     def goJDBfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
@@ -147,6 +186,7 @@ class PortalLoginConfig(object):
         time.sleep(10)
         self.driver.close()
         self.switch_window()
+        time.sleep(3)
 
     def goAEelgame(self):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
@@ -165,23 +205,30 @@ class PortalLoginConfig(object):
         time.sleep(10)
         self.driver.close()
         self.switch_window()
+        time.sleep(3)
 
-    # def goSYlottery(self):
-    #     lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "彩票游戏"下拉式選單
-    #     SY_lotery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/ol/li[8]')  # SY双赢彩票
-    #     ActionChains(self.driver).move_to_element(lobby_lottery).click(SY_lotery).perform()
-    #     time.sleep(8)
-    #     self.switch_window()
-    #     time.sleep(2)
-    #     ActionChains(self.driver).move_by_offset(200, 150).click().perform()  # 點擊0.1元炮場
-    #     time.sleep(4)
-    #
-    #     for j in range(3):
-    #         ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
-    #         time.sleep(0.5)
-    #     time.sleep(10)
-    #     self.driver.close()
-    #     self.switch_window()
+    '''
+    樂透有可能閉盤，就算閉盤也會執行不會報錯。
+    若閉盤就不會有注單
+    '''
+    def goSYlottery(self):
+        lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "彩票游戏"下拉式選單
+        SY_lotery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/ol/li[8]')  # SY双赢彩票
+        ActionChains(self.driver).move_to_element(lobby_lottery).click(SY_lotery).perform()
+        time.sleep(8)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(145, -58).click().perform() # 小
+        time.sleep(0.5)
+        ActionChains(self.driver).send_keys('5').perform()
+        time.sleep(0.5)
+        ActionChains(self.driver).send_keys(Keys.ENTER).perform()  # 確認
+        time.sleep(0.5)
+        ActionChains(self.driver).send_keys(Keys.ENTER).perform()  # 再確認
+        time.sleep(8)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
 
 
 # class GameHall(PortalLoginConfig):
