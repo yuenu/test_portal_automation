@@ -1,32 +1,30 @@
 import unittest
-from LoingConfig import LoginConfig
-import pyautogui
+from LoingConfig import PortalLoginConfig
 import time
+
 
 class PortalLoginTest(unittest.TestCase):
 
     def setUp(self):
-        self.login = LoginConfig()
+        self.portal = PortalLoginConfig()
 
     def tearDown(self):
-        self.login.driver.get('http://www.fnjtd.com/Account/SignOut')
+        self.portal.driver.quit()
 
-    def test_captch_pass(self):
-        self.login.isAnnuncement()
-        self.login.sendUserInfo(self.login.account, self.login.password)
-        self.login.parsingPageSourceAndSaveImage(self.login.filepath)
-        self.login.sendCaptchCode()
-        self.login.clickLoginIn()
-        self.login.loginFail()
+    def test_captcha_pass(self):
+        self.portal.login()
+        time.sleep(3)
+
+        self.portal.goFGfish()
         time.sleep(5)
-        self.login.goGPKfish()
-        pyautogui.PAUSE = 8
-        pyautogui.moveTo(874, 553)  #
-        pyautogui.click()
-        pyautogui.PAUSE = 3
-        pyautogui.click()
-        time.sleep(4)
-
+        self.portal.goAEelgame()
+        time.sleep(3)
+        self.portal.goAPfish()
+        time.sleep(3)
+        self.portal.goGPKfish()
+        time.sleep(3)
+        self.portal.goFGbird()
+        time.sleep(3)
 
 if __name__ == "__main__":
     unittest.main()
