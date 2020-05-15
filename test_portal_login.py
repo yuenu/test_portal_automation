@@ -13,8 +13,8 @@ class PortalLoginTest(unittest.TestCase):
         for i in range(100):
             self.login.isAnnuncement()
             self.login.sendUserInfo(self.login.account, self.login.password)
-            self.login.parsingPageSourceAndSaveImage(self.login.filepath)
-            self.login.sendCaptchCode()
+            self.login.parsingPageSourceAndSaveImageSendCode(self.login.filepath)
+
             self.login.clickLoginIn()
             self.login.loginFail()
             self.login.logout()

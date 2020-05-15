@@ -13,7 +13,7 @@ class PortalLoginConfig(object):
     def __init__(self):
         self.driver = webdriver.Chrome()
         self.windowSize = self.driver.set_window_size(1080, 800)
-        self.account = 'yuenu001'
+        self.account = 'yuenu002'
         self.password = 's24930479'
         self.filepath = f'./recaptcha/captcha.png'
 
@@ -96,13 +96,16 @@ class PortalLoginConfig(object):
     def logout(self):
         self.driver.get('http://www.fnjtd.com/Account/SignOut')
 
+    def switch_window(self):
+        windows = self.driver.window_handles  # 獲得當前瀏覽器所有視窗
+        self.driver.switch_to.window(windows[-1])  # 切換至最新彈窗
+
     def goAPfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
         AP_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[5]')  # AP金蟾捕鱼
         ActionChains(self.driver).move_to_element(lobby_fish).click(AP_fish).perform()
         time.sleep(12)
-        windows = self.driver.window_handles  # 獲得當前瀏覽器所有視窗
-        self.driver.switch_to.window(windows[-1])  # 切換至最新彈窗
+        self.switch_window()
         time.sleep(2)
         ActionChains(self.driver).move_by_offset(0, 0).click().perform() # 點擊0.1元炮場
         time.sleep(4)
@@ -110,77 +113,89 @@ class PortalLoginConfig(object):
             ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
             time.sleep(0.5)
         time.sleep(10)
+        self.driver.close()
+        self.switch_window()
 
     def goGPKfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
         GPK_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[2]/li[1]')  # GPK王者捕鱼
         ActionChains(self.driver).move_to_element(lobby_fish).click(GPK_fish).perform()
         time.sleep(12)
-        windows = self.driver.window_handles  # 獲得當前瀏覽器所有視窗
-        self.driver.switch_to.window(windows[-1])  # 切換至最新彈窗
+        self.switch_window()
         time.sleep(2)
         ActionChains(self.driver).move_by_offset(200, 150).click().perform()  # 點擊0.1元炮場
         time.sleep(4)
-
         for j in range(3):
             ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
             time.sleep(0.5)
         time.sleep(10)
+        self.driver.close()
+        self.switch_window()
+
+    def goJDBfish(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        JDB_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[8]')  # JDB龙王捕鱼
+        ActionChains(self.driver).move_to_element(lobby_fish).click(JDB_fish).perform()
+        time.sleep(14)
+        self.switch_window()
+        time.sleep(1)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 點擊0.1元炮場
+        time.sleep(4)
+        for j in range(3):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
+            time.sleep(0.5)
+        time.sleep(10)
+        self.driver.close()
+        self.switch_window()
 
     def goAEelgame(self):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
         AEelgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/div/ol[1]/li[6]')  # AE阿米巴电子游艺
         ActionChains(self.driver).move_to_element(lobby_elgame).click(AEelgame).perform()
         time.sleep(8)
-        windows = self.driver.window_handles  # 獲得當前瀏覽器所有視窗
-        self.driver.switch_to.window(windows[-1])  # 切換至最新彈窗
+        self.switch_window()
         time.sleep(2)
         ActionChains(self.driver).move_by_offset(400, 520).click().perform()  # 案"一路發"
-        windows = self.driver.window_handles  # 獲得當前瀏覽器所有視窗
-        self.driver.switch_to.window(windows[-1])  # 切換至最新彈窗
+        self.switch_window()
         time.sleep(5)
         ActionChains(self.driver).move_by_offset(-200, -200).click().perform()
         for j in range(3):
             ActionChains(self.driver).move_by_offset(0, 0).click().perform()
-            time.sleep(2)
-        time.sleep(5)
-
-    def goSYlottery(self):
-        lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "彩票游戏"下拉式選單
-        SY_lotery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/ol/li[8]')  # SY双赢彩票
-        ActionChains(self.driver).move_to_element(lobby_lottery).click(SY_lotery).perform()
-        time.sleep(8)
-        windows = self.driver.window_handles  # 獲得當前瀏覽器所有視窗
-        self.driver.switch_to.window(windows[-1])  # 切換至最新彈窗
-        time.sleep(2)
-        ActionChains(self.driver).move_by_offset(200, 150).click().perform()  # 點擊0.1元炮場
-        time.sleep(4)
-
-        for j in range(3):
-            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
-            time.sleep(0.5)
+            time.sleep(3)
         time.sleep(10)
+        self.driver.close()
+        self.switch_window()
+
+    # def goSYlottery(self):
+    #     lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "彩票游戏"下拉式選單
+    #     SY_lotery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/ol/li[8]')  # SY双赢彩票
+    #     ActionChains(self.driver).move_to_element(lobby_lottery).click(SY_lotery).perform()
+    #     time.sleep(8)
+    #     self.switch_window()
+    #     time.sleep(2)
+    #     ActionChains(self.driver).move_by_offset(200, 150).click().perform()  # 點擊0.1元炮場
+    #     time.sleep(4)
+    #
+    #     for j in range(3):
+    #         ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
+    #         time.sleep(0.5)
+    #     time.sleep(10)
+    #     self.driver.close()
+    #     self.switch_window()
 
 
-class GameHall(PortalLoginConfig):
-
-    def __init__(self):
-        super(GameHall, self).__init__()
-
-    def goAPfishs(self):
-        fish_btn = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')
-        # GPK_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[2]/li[1]')
-        AP_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[5]')
-        ActionChains(self.driver).move_to_element(fish_btn).click(AP_fish).perform()
-        time.sleep(10)
-        windows = self.driver.window_handles  # 獲得當前瀏覽器所有視窗
-        self.driver.switch_to.window(windows[-1])  # 切換至最新彈窗
-        time.sleep(2)
-        # 點擊0.1元炮場
-        ActionChains(self.driver).move_by_offset(0, 0).click().perform()
-        time.sleep(4)
-        # 發炮
-        ActionChains(self.driver).move_by_offset(0, 0).click().perform()
-        time.sleep(0.5)
-        # 發炮2
-        ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+# class GameHall(PortalLoginConfig):
+#
+#     def goAPfish(self):
+#         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+#         AP_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[5]')  # AP金蟾捕鱼
+#         ActionChains(self.driver).move_to_element(lobby_fish).click(AP_fish).perform()
+#         time.sleep(12)
+#         self.switch_window()
+#         time.sleep(2)
+#         ActionChains(self.driver).move_by_offset(0, 0).click().perform() # 點擊0.1元炮場
+#         time.sleep(4)
+#         for j in range(3):
+#             ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
+#             time.sleep(0.5)
+#         time.sleep(10)

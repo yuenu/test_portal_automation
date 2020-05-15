@@ -1,5 +1,5 @@
 import unittest
-from LoingConfig import PortalLoginConfig, GameHall
+from LoingConfig import PortalLoginConfig
 import time
 
 
@@ -14,11 +14,14 @@ class PortalLoginTest(unittest.TestCase):
     def test_captcha_pass(self):
         self.portal.login()
         time.sleep(3)
-        self.GameHall.goAPfishs()
-       # self.portal.goGPKfish()
-       # self.portal.goAPfish()
-       # self.portal.goAEelgame()
-
+        self.portal.goAEelgame()
+        time.sleep(3)
+        self.portal.goAPfish()
+        time.sleep(3)
+        self.portal.goGPKfish()
+        time.sleep(3)
+        self.portal.goJDBfish()
+        time.sleep(3)
 
 if __name__ == "__main__":
     unittest.main()
