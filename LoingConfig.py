@@ -11,12 +11,13 @@ pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
 
 
 class PortalLoginConfig(object):
+    driver = webdriver.Chrome()
+    driver.set_window_size(1080, 800)
+    driver.get('http://www.fnjtd.com/')
+
     def __init__(self):
-        self.driver = webdriver.Chrome()
-        self.windowSize = self.driver.set_window_size(1080, 800)
-        self.urlLink = self.driver.get('http://www.fnjtd.com/')
         self.account = 'yuenu002'
-        self.password = 's24930479'
+        self.password = 'a123456'
         self.filepath = f'./recaptcha/captcha.png'
 
     def isAnnuncement(self):
@@ -32,9 +33,19 @@ class PortalLoginConfig(object):
         if len(announcement2) != 0:
             self.driver.find_element_by_xpath('/html/body/div[7]/div[2]/div[2]/i').click()
 
+    def device_verification(self):
+        soup = BeautifulSoup(self.driver.page_source, 'lxml')
+        device_verification = soup.select('i.fas.fa-times-circle.close')
+        # 裝置驗證彈窗辨識
+        print(len(device_verification))
+        if len(device_verification) != 0:
+            self.driver.find_element_by_class_name('fas.fa-times-circle.close').click()
+        else:
+            pass
+
 
     def sendUserInfo(self, account, password):
-        time.sleep(0.5)
+        time.sleep(1)
         self.driver.find_element_by_id('login_account').send_keys(self.account)
         self.driver.find_element_by_id('login_password').send_keys(self.password)
 
@@ -57,31 +68,38 @@ class PortalLoginConfig(object):
     def clickLoginIn(self):
         self.driver.find_element_by_css_selector('#login-box').click()
         time.sleep(2)
-        soup = BeautifulSoup(self.driver.page_source, 'lxml')
-        device_verification = soup.select('i.fas.fa-times-circle.close')
-        # 裝置驗證彈窗辨識
-        print(len(device_verification))
-        if len(device_verification) != 0:
-            self.driver.find_element_by_class_name('fas.fa-times-circle.close').click()
-        else:
-            pass
+        self.device_verification()
         self.isAnnuncement()
 
     def loginFail(self):
         soup = BeautifulSoup(self.driver.page_source, 'lxml')
         time.sleep(1)
         alert = soup.find_all(class_='custom-modal')
-        if len(alert) > 0:
+        valid = soup.select("#cms-modal-input")
+        if len(alert) == 1 or len(valid) == 1:
+            print('valid:', valid)
             for i in range(10):
                 soup = BeautifulSoup(self.driver.page_source, 'lxml')
                 alert = soup.find_all(class_='custom-modal')
-                if len(alert) > 0:
+                valid = soup.select("#cms-modal-input")
+                if len(alert) == 1 and len(valid) == 0:
+                    print('驗證碼錯誤')
                     button = self.driver.find_element_by_xpath('/html/body/div[12]/div/div/div[3]/button[2]')
                     self.driver.execute_script("arguments[0].click();", button)
                     time.sleep(1.5)
                     self.parsingPageSourceAndSaveImageSendCode(self.filepath)
                     self.clickLoginIn()
                     time.sleep(2)
+
+                elif len(alert) == 1 and len(valid) == 1:
+                    print('跨區驗證')
+                    time.sleep(0.5)
+                    self.driver.find_element_by_xpath('//*[@id="cms-modal-input"]').send_keys('123456')
+                    time.sleep(0.5)
+                    self.driver.find_element_by_xpath('//*[@id="ng-app"]/body/div[12]/div/div/div[3]/button[2]').click()
+                    time.sleep(5)
+                    self.device_verification()
+                    self.isAnnuncement()
                 else:
                     break
         else:
@@ -100,6 +118,11 @@ class PortalLoginConfig(object):
     def switch_window(self):
         windows = self.driver.window_handles  # 獲得當前瀏覽器所有視窗
         self.driver.switch_to.window(windows[-1])  # 切換至最新彈窗
+
+
+
+
+class GameHall(PortalLoginConfig):
 
     def goAPfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
@@ -191,16 +214,66 @@ class PortalLoginConfig(object):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
         AEelgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/div/ol[1]/li[6]')  # AE阿米巴电子游艺
         ActionChains(self.driver).move_to_element(lobby_elgame).click(AEelgame).perform()
-        time.sleep(8)
+        time.sleep(5)
         self.switch_window()
         time.sleep(2)
-        ActionChains(self.driver).move_by_offset(400, 520).click().perform()  # 案"一路發"
+        ActionChains(self.driver).move_by_offset(380, 520).click().perform()  # 案"一路發"
         self.switch_window()
-        time.sleep(5)
-        ActionChains(self.driver).move_by_offset(-200, -200).click().perform()
+        time.sleep(6)
+        ActionChains(self.driver).move_by_offset(-160, -180).click().perform()
         for j in range(3):
             ActionChains(self.driver).move_by_offset(0, 0).click().perform()
             time.sleep(3)
+        time.sleep(10)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
+    def goPGelgame(self):
+        lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
+        PGelgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/div/ol[4]/li[1]')  # PG电子游艺
+        ActionChains(self.driver).move_to_element(lobby_elgame).click(PGelgame).perform()
+        time.sleep(5)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(-600, 250).click().perform()  # 案"双囍临门"
+        self.switch_window()
+        time.sleep(8)
+        ActionChains(self.driver).move_by_offset(300, 300).click().perform() # "開始"
+        time.sleep(1)
+        ActionChains(self.driver).move_by_offset(0, 80).click().perform()  # "減碼按鈕"
+        for j in range(10):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+            time.sleep(0.5)
+        ActionChains(self.driver).move_by_offset(100, 0).click().perform()  # "轉動按鈕"
+        for j in range(3):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+            time.sleep(4)
+        time.sleep(10)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
+    def goSWelgame(self):
+        lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
+        SWelgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/div/ol[1]/li[5]')  # 天风电子游艺
+        ActionChains(self.driver).move_to_element(lobby_elgame).click(SWelgame).perform()
+        time.sleep(5)
+        self.switch_window()
+        time.sleep(1)
+        ActionChains(self.driver).move_by_offset(350, 150).click().perform()  # 案"天上凤凰"
+        self.switch_window()
+        time.sleep(10)
+        ActionChains(self.driver).move_by_offset(-200, 220).click().perform() # "開始"
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(-280, 70).click().perform()  # "減碼按鈕"
+        for j in range(10):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+            time.sleep(0.5)
+        ActionChains(self.driver).move_by_offset(800, 0).click().perform()  # "轉動按鈕"
+        for j in range(3):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+            time.sleep(4)
         time.sleep(10)
         self.driver.close()
         self.switch_window()
@@ -228,23 +301,3 @@ class PortalLoginConfig(object):
         self.driver.close()
         self.switch_window()
         time.sleep(3)
-
-
-class GameHall(PortalLoginConfig):
-
-    def __init__(self):
-        super(GameHall, self).__init__()
-
-    def goAPfish(self):
-        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        AP_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[5]')  # AP金蟾捕鱼
-        ActionChains(self.driver).move_to_element(lobby_fish).click(AP_fish).perform()
-        time.sleep(12)
-        self.switch_window()
-        time.sleep(2)
-        ActionChains(self.driver).move_by_offset(0, 0).click().perform() # 點擊0.1元炮場
-        time.sleep(4)
-        for j in range(3):
-            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
-            time.sleep(0.5)
-        time.sleep(10)

@@ -1,5 +1,5 @@
 import unittest
-from LoingConfig import PortalLoginConfig
+from LoingConfig import PortalLoginConfig, GameHall
 import time
 
 
@@ -7,6 +7,7 @@ class PortalLoginTest(unittest.TestCase):
 
     def setUp(self):
         self.portal = PortalLoginConfig()
+        self.game = GameHall()
 
     def tearDown(self):
         self.portal.driver.quit()
@@ -14,11 +15,14 @@ class PortalLoginTest(unittest.TestCase):
     def test_captcha_pass(self):
         self.portal.login()
         time.sleep(3)
-        self.portal.goFGfish()
-        self.portal.goAEelgame()
-        self.portal.goAPfish()
-        self.portal.goGPKfish()
-        self.portal.goFGbird()
+        # self.game.goSWelgame()
+        self.game.goAPfish()
+        # self.game.goFGfish()
+        # self.game.goPGelgame()
+        # self.game.goAPfish()
+        # self.game.goGPKfish()
+        # self.game.goFGbird()
+        # self.game.goSYlottery()
 
 if __name__ == "__main__":
     unittest.main()
