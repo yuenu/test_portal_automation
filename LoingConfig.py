@@ -124,6 +124,7 @@ class PortalLoginConfig(object):
 
 class GameHall(PortalLoginConfig):
 
+    ''' 捕魚遊戲 '''
     def goAPfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
         AP_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[5]')  # AP金蟾捕鱼
@@ -210,6 +211,7 @@ class GameHall(PortalLoginConfig):
         self.switch_window()
         time.sleep(3)
 
+    '''電子遊藝'''
     def goAEelgame(self):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
         AEelgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/div/ol[1]/li[6]')  # AE阿米巴电子游艺
@@ -280,6 +282,7 @@ class GameHall(PortalLoginConfig):
         time.sleep(3)
 
     '''
+    彩票遊戲
     樂透有可能閉盤，就算閉盤也會執行不會報錯。
     若閉盤就不會有注單
     '''
@@ -301,3 +304,77 @@ class GameHall(PortalLoginConfig):
         self.driver.close()
         self.switch_window()
         time.sleep(3)
+
+    '''體育賽事'''
+    def go3singSport(self):
+        lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
+        _3sing_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/ol/li[1]')  # 三昇体育
+        ActionChains(self.driver).move_to_element(lobby_sport).click(_3sing_sport).perform()
+        time.sleep(5)
+        self.switch_window()
+        ActionChains(self.driver).move_by_offset(-280, -20).click().perform()  # 混合过关
+        time.sleep(3)
+        ActionChains(self.driver).move_by_offset(152, 185).click().perform()  # 串關-大-1
+        ActionChains(self.driver).send_keys('5').perform()
+        time.sleep(1)
+        ActionChains(self.driver).send_keys(Keys.ENTER).perform()
+        time.sleep(1)
+        for j in range(6):
+            ActionChains(self.driver).move_by_offset(0, 75).click().perform()  # 串關-大-2,3
+            time.sleep(1)
+            ActionChains(self.driver).send_keys('5').perform()
+            time.sleep(1)
+            ActionChains(self.driver).send_keys(Keys.ENTER).perform()
+            time.sleep(1)
+        ActionChains(self.driver).send_keys(Keys.ENTER).perform()
+        time.sleep(8)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
+    def goSABASport(self):
+        lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
+        SABA_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/ol/li[2]')  # 沙巴体育
+        ActionChains(self.driver).move_to_element(lobby_sport).click(SABA_sport).perform()
+        time.sleep(10)
+        self.switch_window()
+        ActionChains(self.driver).move_by_offset(-130, -100).click().perform()  # 串關
+        time.sleep(4)
+        ActionChains(self.driver).move_by_offset(30, 170).click().perform()  # 串關-大-1
+        time.sleep(2)
+        for j in range(2):
+            ActionChains(self.driver).move_by_offset(0, 130).click().perform()  # 串關-大-2,3
+            time.sleep(2)
+        ActionChains(self.driver).send_keys('10').perform()
+        time.sleep(1)
+        ActionChains(self.driver).send_keys(Keys.ENTER).perform()
+        time.sleep(1)
+        ActionChains(self.driver).send_keys(Keys.ENTER).perform()
+        time.sleep(8)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
+    def goCRSport(self):
+        lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
+        CR_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/ol/li[7]')  # 皇冠体育
+        ActionChains(self.driver).move_to_element(lobby_sport).click(CR_sport).perform()
+        time.sleep(10)
+        self.switch_window()
+        ActionChains(self.driver).move_by_offset(-590, -70).click().perform()  # 综合过关
+        time.sleep(4)
+        ActionChains(self.driver).move_by_offset(435, -10).click().perform()  # 串關-大-1
+        time.sleep(2)
+        for j in range(6):
+            ActionChains(self.driver).move_by_offset(0, 100).click().perform()  # 串關-大-2,3
+            time.sleep(2)
+        ActionChains(self.driver).send_keys('2').perform()
+        time.sleep(1)
+        ActionChains(self.driver).send_keys(Keys.ENTER).perform()
+        time.sleep(1)
+        ActionChains(self.driver).send_keys(Keys.ENTER).perform()
+        time.sleep(8)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
