@@ -366,3 +366,43 @@
 [0518/180523.120:ERROR:exception_snapshot_win.cc(98)] thread ID 6080 not found in process
 [0518/180523.249:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
 [0518/180523.249:ERROR:exception_snapshot_win.cc(98)] thread ID 11708 not found in process
+[0518/185939.130:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0518/185939.130:ERROR:exception_snapshot_win.cc(98)] thread ID 6152 not found in process
+[0518/185939.132:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0518/185939.132:ERROR:exception_snapshot_win.cc(98)] thread ID 6072 not found in process
+[0518/185939.254:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0518/185939.254:ERROR:exception_snapshot_win.cc(98)] thread ID 8588 not found in process
+[0518/190009.292:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0518/190009.293:ERROR:exception_snapshot_win.cc(98)] thread ID 6992 not found in process
+[0518/190009.417:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0518/190009.417:ERROR:exception_snapshot_win.cc(98)] thread ID 13564 not found in process
+[0519/090957.909:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/090957.910:ERROR:exception_snapshot_win.cc(98)] thread ID 4412 not found in process
+[0519/090958.029:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/090958.029:ERROR:exception_snapshot_win.cc(98)] thread ID 8772 not found in process
+[0519/091218.157:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/091218.157:ERROR:exception_snapshot_win.cc(98)] thread ID 9020 not found in process
+[0519/091218.288:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/091218.288:ERROR:exception_snapshot_win.cc(98)] thread ID 4664 not found in process
+[0519/104937.944:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/104937.945:ERROR:exception_snapshot_win.cc(98)] thread ID 10352 not found in process
+[0519/104938.065:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/104938.065:ERROR:exception_snapshot_win.cc(98)] thread ID 4508 not found in process
+[0519/140453.286:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/140453.287:ERROR:exception_snapshot_win.cc(98)] thread ID 2760 not found in process
+[0519/140453.293:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/140453.293:ERROR:exception_snapshot_win.cc(98)] thread ID 7804 not found in process
+[0519/140453.414:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/140453.414:ERROR:exception_snapshot_win.cc(98)] thread ID 3924 not found in process
+[0519/140937.529:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/140937.530:ERROR:exception_snapshot_win.cc(98)] thread ID 88 not found in process
+[0519/140937.658:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/140937.658:ERROR:exception_snapshot_win.cc(98)] thread ID 12632 not found in process
+[0519/141432.653:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/141432.654:ERROR:exception_snapshot_win.cc(98)] thread ID 2976 not found in process
+[0519/141432.781:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/141432.781:ERROR:exception_snapshot_win.cc(98)] thread ID 12960 not found in process
+[0519/142117.859:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/142117.859:ERROR:exception_snapshot_win.cc(98)] thread ID 148 not found in process
+[0519/142117.980:ERROR:process_reader_win.cc(123)] NtOpenThread: {拒絕存取} 程序已請求存取一物件，但未被授與存取權。 (0xc0000022)
+[0519/142117.980:ERROR:exception_snapshot_win.cc(98)] thread ID 10764 not found in process

@@ -111,6 +111,7 @@ class PortalLoginConfig(object):
         self.parsingPageSourceAndSaveImageSendCode(self.filepath)
         self.clickLoginIn()
         self.loginFail()
+        time.sleep(2)
 
     def logout(self):
         self.driver.get('http://www.fnjtd.com/Account/SignOut')
@@ -120,11 +121,8 @@ class PortalLoginConfig(object):
         self.driver.switch_to.window(windows[-1])  # 切換至最新彈窗
 
 
-
-
 class GameHall(PortalLoginConfig):
-
-    ''' 捕魚遊戲 '''
+    """捕鱼游戏"""
     def goAPfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
         AP_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[5]')  # AP金蟾捕鱼
@@ -209,9 +207,136 @@ class GameHall(PortalLoginConfig):
         time.sleep(10)
         self.driver.close()
         self.switch_window()
+        time.sleep(5)
+
+    # TH捕魚關閉的話不會馬上把錢轉出來，後面有皆其他娛樂城的話不會帶錢進去
+    def goTHfish(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        TH_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[7]')  # TH李逵劈鱼
+        ActionChains(self.driver).move_to_element(lobby_fish).click(TH_fish).perform()
+        time.sleep(12)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform() # 點擊0.1元炮場
+        time.sleep(5)
+        for j in range(70):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
+            time.sleep(0.2)
+        time.sleep(5)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(8)
+
+    def goLEGfish(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        LEG_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[2]/li[9]')  # LEG捕鱼大作战
+        ActionChains(self.driver).move_to_element(lobby_fish).click(LEG_fish).perform()
+        time.sleep(10)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 點擊0.1元炮場
+        time.sleep(5)
+        ActionChains(self.driver).move_by_offset(880, 230).click().perform()  # 自動射擊
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+        time.sleep(5)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(5)
+
+    def goMTfish(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        MT_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[4]/li[9]')  # MT美天李逵劈鱼
+        ActionChains(self.driver).move_to_element(lobby_fish).click(MT_fish).perform()
+        time.sleep(12)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(-300, 0).click().perform()  # 點擊0.1元炮場
+        time.sleep(10)
+        ActionChains(self.driver).move_by_offset(800, -240).click().perform()  # 點"x"
+        for j in range(5):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
+            time.sleep(0.5)
+        time.sleep(5)
+        self.driver.close()
+        self.switch_window()
         time.sleep(3)
 
-    '''電子遊藝'''
+    def goMWfish(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        MW_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[1]/li[10]')  # MW千炮捕鱼
+        ActionChains(self.driver).move_to_element(lobby_fish).click(MW_fish).perform()
+        time.sleep(16)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 點擊0.1元炮場
+        time.sleep(16)
+        ActionChains(self.driver).move_by_offset(460, 5).click().perform()  # 點"確定"
+        time.sleep(1)
+        for j in range(3):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 點擊
+            time.sleep(2)
+        time.sleep(5)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
+    def goVGfish(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        VG_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[2]/li[10]')  # VG龙王捕鱼
+        ActionChains(self.driver).move_to_element(lobby_fish).click(VG_fish).perform()
+        time.sleep(12)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform() # 點擊0.1元炮場
+        time.sleep(7)
+        for j in range(3):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
+            time.sleep(0.5)
+        time.sleep(10)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
+    def goBSPfish(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        BSP_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[4]/li[11]')  # BSP千炮捕鱼王3D
+        ActionChains(self.driver).move_to_element(lobby_fish).click(BSP_fish).perform()
+        time.sleep(10)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(490, -280).click().perform()  # 點擊"x"
+        time.sleep(1)
+        ActionChains(self.driver).move_by_offset(-780, 220).click().perform()  # 點擊0.1元炮場
+        time.sleep(10)
+        ActionChains(self.driver).move_by_offset(250, 415).click().perform()  # 點擊自動
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+        time.sleep(5)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
+    def goYGfish(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        goYGfish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[12]')  # YG超级海王
+        ActionChains(self.driver).move_to_element(lobby_fish).click(goYGfish).perform()
+        time.sleep(10)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 點擊0.1元炮場
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(115, 225).click().perform()  # 點擊自動
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+        time.sleep(8)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
+
+
+    '''电子游艺'''
     def goAEelgame(self):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
         AEelgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/div/ol[1]/li[6]')  # AE阿米巴电子游艺
@@ -265,7 +390,7 @@ class GameHall(PortalLoginConfig):
         time.sleep(1)
         ActionChains(self.driver).move_by_offset(350, 150).click().perform()  # 案"天上凤凰"
         self.switch_window()
-        time.sleep(10)
+        time.sleep(12)
         ActionChains(self.driver).move_by_offset(-200, 220).click().perform() # "開始"
         time.sleep(2)
         ActionChains(self.driver).move_by_offset(-280, 70).click().perform()  # "減碼按鈕"
@@ -282,7 +407,7 @@ class GameHall(PortalLoginConfig):
         time.sleep(3)
 
     '''
-    彩票遊戲
+    彩票游戏
     樂透有可能閉盤，就算閉盤也會執行不會報錯。
     若閉盤就不會有注單
     '''
@@ -305,7 +430,7 @@ class GameHall(PortalLoginConfig):
         self.switch_window()
         time.sleep(3)
 
-    '''體育賽事'''
+    '''体育赛事'''
     def go3singSport(self):
         lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
         _3sing_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/ol/li[1]')  # 三昇体育
@@ -314,13 +439,16 @@ class GameHall(PortalLoginConfig):
         self.switch_window()
         ActionChains(self.driver).move_by_offset(-280, -20).click().perform()  # 混合过关
         time.sleep(3)
-        ActionChains(self.driver).move_by_offset(152, 185).click().perform()  # 串關-大-1
+        ActionChains(self.driver).move_by_offset(-110, 40).click().perform()  # 明天
+        time.sleep(1)
+        ActionChains(self.driver).move_by_offset(230, 190).click().perform()  # 串關-大-1
+        time.sleep(1)
         ActionChains(self.driver).send_keys('5').perform()
         time.sleep(1)
         ActionChains(self.driver).send_keys(Keys.ENTER).perform()
         time.sleep(1)
-        for j in range(6):
-            ActionChains(self.driver).move_by_offset(0, 75).click().perform()  # 串關-大-2,3
+        for j in range(4):
+            ActionChains(self.driver).move_by_offset(0, 125).click().perform()  # 串關-大-2,3
             time.sleep(1)
             ActionChains(self.driver).send_keys('5').perform()
             time.sleep(1)
@@ -340,9 +468,9 @@ class GameHall(PortalLoginConfig):
         self.switch_window()
         ActionChains(self.driver).move_by_offset(-130, -100).click().perform()  # 串關
         time.sleep(4)
-        ActionChains(self.driver).move_by_offset(30, 170).click().perform()  # 串關-大-1
+        ActionChains(self.driver).move_by_offset(30, 170).click().perform()  # 串關-1
         time.sleep(2)
-        for j in range(2):
+        for j in range(4):
             ActionChains(self.driver).move_by_offset(0, 130).click().perform()  # 串關-大-2,3
             time.sleep(2)
         ActionChains(self.driver).send_keys('10').perform()
@@ -361,19 +489,22 @@ class GameHall(PortalLoginConfig):
         ActionChains(self.driver).move_to_element(lobby_sport).click(CR_sport).perform()
         time.sleep(10)
         self.switch_window()
-        ActionChains(self.driver).move_by_offset(-590, -70).click().perform()  # 综合过关
+        ActionChains(self.driver).move_by_offset(-540, -85).click().perform()  # 综合过关
         time.sleep(4)
-        ActionChains(self.driver).move_by_offset(435, -10).click().perform()  # 串關-大-1
-        time.sleep(2)
-        for j in range(6):
-            ActionChains(self.driver).move_by_offset(0, 100).click().perform()  # 串關-大-2,3
+        ActionChains(self.driver).move_by_offset(80, -140).click().perform()  # 明日
+        for i in range(3):
             time.sleep(2)
-        ActionChains(self.driver).send_keys('2').perform()
-        time.sleep(1)
-        ActionChains(self.driver).send_keys(Keys.ENTER).perform()
-        time.sleep(1)
-        ActionChains(self.driver).send_keys(Keys.ENTER).perform()
-        time.sleep(8)
+            ActionChains(self.driver).move_by_offset(300, 130).click().perform()  # 串關1
+            for j in range(4):
+                ActionChains(self.driver).move_by_offset(0, 90).click().perform()  # 串關2.3.4.5
+                time.sleep(2)
+            ActionChains(self.driver).send_keys('2').perform()
+            time.sleep(1)
+            ActionChains(self.driver).send_keys(Keys.ENTER).perform()
+            time.sleep(1)
+            ActionChains(self.driver).send_keys(Keys.ENTER).perform()
+            time.sleep(5)
+            ActionChains(self.driver).move_by_offset(-300, -490).click().perform()  # 在案一次明日
         self.driver.close()
         self.switch_window()
         time.sleep(3)
