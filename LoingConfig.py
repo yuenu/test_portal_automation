@@ -12,6 +12,7 @@ pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
 
 class PortalLoginConfig(object):
     driver = webdriver.Chrome()
+
     driver.set_window_size(1080, 800)
     driver.get('http://www.fnjtd.com/')
 
@@ -125,7 +126,7 @@ class GameHall(PortalLoginConfig):
     """捕鱼游戏"""
     def goAPfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        AP_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[5]')  # AP金蟾捕鱼
+        AP_fish = self.driver.find_element_by_css_selector('[game-box="ap-jinchan"]')  # AP金蟾捕鱼
         ActionChains(self.driver).move_to_element(lobby_fish).click(AP_fish).perform()
         time.sleep(12)
         self.switch_window()
@@ -142,7 +143,7 @@ class GameHall(PortalLoginConfig):
 
     def goFGbird(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        FG_bird = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[2]/li[4]')  # FG捕鸟达人
+        FG_bird = self.driver.find_element_by_css_selector('[game-box="fg-bird"]')
         ActionChains(self.driver).move_to_element(lobby_fish).click(FG_bird).perform()
         time.sleep(12)
         self.switch_window()
@@ -159,7 +160,7 @@ class GameHall(PortalLoginConfig):
 
     def goFGfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        FG_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[1]/li[4]')  # FG美人捕鱼
+        FG_fish = self.driver.find_element_by_css_selector('[game-box="fg-beauty"]')  # FG美人捕鱼
         ActionChains(self.driver).move_to_element(lobby_fish).click(FG_fish).perform()
         time.sleep(12)
         self.switch_window()
@@ -177,7 +178,7 @@ class GameHall(PortalLoginConfig):
 
     def goGPKfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        GPK_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[2]/li[1]')  # GPK王者捕鱼
+        GPK_fish = self.driver.find_element_by_css_selector('[game-box="gpk-king"]')  # GPK王者捕鱼
         ActionChains(self.driver).move_to_element(lobby_fish).click(GPK_fish).perform()
         time.sleep(12)
         self.switch_window()
@@ -192,9 +193,29 @@ class GameHall(PortalLoginConfig):
         self.switch_window()
         time.sleep(3)
 
+    def goGPK2fish(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        GPK2_fish = self.driver.find_element_by_css_selector('[game-box="gpk2-fish"]')  # GPK2大圣降魔
+        ActionChains(self.driver).move_to_element(lobby_fish).click(GPK2_fish).perform()
+        time.sleep(16)
+        self.switch_window()
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(650, 270).click().perform()  # 點擊"x"
+        time.sleep(3)
+        ActionChains(self.driver).move_by_offset(-500, -280).click().perform()  # 點擊0.01
+
+        time.sleep(8)
+        for j in range(30):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
+            time.sleep(0.5)
+        time.sleep(10)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
     def goJDBfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        JDB_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[8]')  # JDB龙王捕鱼
+        JDB_fish = self.driver.find_element_by_css_selector('[game-box="jdb-dragon"]')  # JDB龙王捕鱼
         ActionChains(self.driver).move_to_element(lobby_fish).click(JDB_fish).perform()
         time.sleep(14)
         self.switch_window()
@@ -212,7 +233,7 @@ class GameHall(PortalLoginConfig):
     # TH捕魚關閉的話不會馬上把錢轉出來，後面有皆其他娛樂城的話不會帶錢進去
     def goTHfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        TH_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[7]')  # TH李逵劈鱼
+        TH_fish = self.driver.find_element_by_css_selector('[game-box="th-lee"]')  # TH李逵劈鱼
         ActionChains(self.driver).move_to_element(lobby_fish).click(TH_fish).perform()
         time.sleep(12)
         self.switch_window()
@@ -229,7 +250,7 @@ class GameHall(PortalLoginConfig):
 
     def goLEGfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        LEG_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[2]/li[9]')  # LEG捕鱼大作战
+        LEG_fish = self.driver.find_element_by_css_selector('[game-box="leg-fish"]')  # LEG捕鱼大作战
         ActionChains(self.driver).move_to_element(lobby_fish).click(LEG_fish).perform()
         time.sleep(10)
         self.switch_window()
@@ -246,7 +267,7 @@ class GameHall(PortalLoginConfig):
 
     def goMTfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        MT_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[4]/li[9]')  # MT美天李逵劈鱼
+        MT_fish = self.driver.find_element_by_css_selector('[game-box="mt-lee"]')  # MT美天李逵劈鱼
         ActionChains(self.driver).move_to_element(lobby_fish).click(MT_fish).perform()
         time.sleep(12)
         self.switch_window()
@@ -264,7 +285,7 @@ class GameHall(PortalLoginConfig):
 
     def goMWfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        MW_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[1]/li[10]')  # MW千炮捕鱼
+        MW_fish = self.driver.find_element_by_css_selector('[game-box="mw-fish"]')  # MW千炮捕鱼
         ActionChains(self.driver).move_to_element(lobby_fish).click(MW_fish).perform()
         time.sleep(16)
         self.switch_window()
@@ -283,7 +304,7 @@ class GameHall(PortalLoginConfig):
 
     def goVGfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        VG_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[2]/li[10]')  # VG龙王捕鱼
+        VG_fish = self.driver.find_element_by_css_selector('[game-box="vg-fish"]')  # VG龙王捕鱼
         ActionChains(self.driver).move_to_element(lobby_fish).click(VG_fish).perform()
         time.sleep(12)
         self.switch_window()
@@ -300,7 +321,7 @@ class GameHall(PortalLoginConfig):
 
     def goBSPfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        BSP_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[4]/li[11]')  # BSP千炮捕鱼王3D
+        BSP_fish = self.driver.find_element_by_css_selector('[game-box="bsp-fishcannon"]')  # BSP千炮捕鱼王3D
         ActionChains(self.driver).move_to_element(lobby_fish).click(BSP_fish).perform()
         time.sleep(10)
         self.switch_window()
@@ -319,7 +340,7 @@ class GameHall(PortalLoginConfig):
 
     def goYGfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
-        goYGfish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/div/ol[3]/li[12]')  # YG超级海王
+        goYGfish = self.driver.find_element_by_css_selector('[game-box="yg-fishseaking"]')  # YG超级海王
         ActionChains(self.driver).move_to_element(lobby_fish).click(goYGfish).perform()
         time.sleep(10)
         self.switch_window()
@@ -339,7 +360,7 @@ class GameHall(PortalLoginConfig):
     '''电子游艺'''
     def goAEelgame(self):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
-        AEelgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/div/ol[1]/li[6]')  # AE阿米巴电子游艺
+        AEelgame = self.driver.find_element_by_css_selector('[game-box="ae"]')  # AE阿米巴电子游艺
         ActionChains(self.driver).move_to_element(lobby_elgame).click(AEelgame).perform()
         time.sleep(5)
         self.switch_window()
@@ -358,7 +379,7 @@ class GameHall(PortalLoginConfig):
 
     def goPGelgame(self):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
-        PGelgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/div/ol[4]/li[1]')  # PG电子游艺
+        PGelgame = self.driver.find_element_by_css_selector('[game-box="pg"]')  # PG电子游艺
         ActionChains(self.driver).move_to_element(lobby_elgame).click(PGelgame).perform()
         time.sleep(5)
         self.switch_window()
@@ -383,7 +404,7 @@ class GameHall(PortalLoginConfig):
 
     def goSWelgame(self):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
-        SWelgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/div/ol[1]/li[5]')  # 天风电子游艺
+        SWelgame = self.driver.find_element_by_css_selector('[game-box="sw"]')  # 天风电子游艺
         ActionChains(self.driver).move_to_element(lobby_elgame).click(SWelgame).perform()
         time.sleep(5)
         self.switch_window()
@@ -413,7 +434,7 @@ class GameHall(PortalLoginConfig):
     '''
     def goSYlottery(self):
         lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "彩票游戏"下拉式選單
-        SY_lotery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/ol/li[8]')  # SY双赢彩票
+        SY_lotery = self.driver.find_element_by_css_selector('[game-box="sy"]')  # SY双赢彩票
         ActionChains(self.driver).move_to_element(lobby_lottery).click(SY_lotery).perform()
         time.sleep(8)
         self.switch_window()
@@ -433,7 +454,7 @@ class GameHall(PortalLoginConfig):
     '''体育赛事'''
     def go3singSport(self):
         lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
-        _3sing_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/ol/li[1]')  # 三昇体育
+        _3sing_sport = self.driver.find_element_by_css_selector('[game-box="3sing"]')  # 三昇体育
         ActionChains(self.driver).move_to_element(lobby_sport).click(_3sing_sport).perform()
         time.sleep(5)
         self.switch_window()
@@ -462,7 +483,7 @@ class GameHall(PortalLoginConfig):
 
     def goSABASport(self):
         lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
-        SABA_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/ol/li[2]')  # 沙巴体育
+        SABA_sport = self.driver.find_element_by_css_selector('[game-box="saba"]')  # 沙巴体育
         ActionChains(self.driver).move_to_element(lobby_sport).click(SABA_sport).perform()
         time.sleep(10)
         self.switch_window()
@@ -485,7 +506,7 @@ class GameHall(PortalLoginConfig):
 
     def goCRSport(self):
         lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
-        CR_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/ol/li[7]')  # 皇冠体育
+        CR_sport = self.driver.find_element_by_css_selector('[game-box="cr"]')  # 皇冠体育
         ActionChains(self.driver).move_to_element(lobby_sport).click(CR_sport).perform()
         time.sleep(10)
         self.switch_window()
