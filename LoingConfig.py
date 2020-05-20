@@ -12,7 +12,6 @@ pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
 
 class PortalLoginConfig(object):
     driver = webdriver.Chrome()
-
     driver.set_window_size(1080, 800)
     driver.get('http://www.fnjtd.com/')
 
@@ -25,7 +24,7 @@ class PortalLoginConfig(object):
         soup = BeautifulSoup(self.driver.page_source, 'lxml')
         announcement_element = soup.select('div.show#marquee-wrapper')
         announcement2 = soup.find_all(class_='modal-overlay modal-show')
-        time.sleep(2.5)
+        time.sleep(3)
         if len(announcement_element) != 0:
             self.driver.find_element_by_xpath('//*[@id="marquee"]/footer/span').click()
         else:
@@ -123,6 +122,7 @@ class PortalLoginConfig(object):
 
 
 class GameHall(PortalLoginConfig):
+
     """捕鱼游戏"""
     def goAPfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
@@ -269,7 +269,7 @@ class GameHall(PortalLoginConfig):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
         MT_fish = self.driver.find_element_by_css_selector('[game-box="mt-lee"]')  # MT美天李逵劈鱼
         ActionChains(self.driver).move_to_element(lobby_fish).click(MT_fish).perform()
-        time.sleep(12)
+        time.sleep(15)
         self.switch_window()
         time.sleep(2)
         ActionChains(self.driver).move_by_offset(-300, 0).click().perform()  # 點擊0.1元炮場
@@ -355,31 +355,54 @@ class GameHall(PortalLoginConfig):
         self.switch_window()
         time.sleep(3)
 
+    def goKAfish(self):
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        goKAfish = self.driver.find_element_by_css_selector('[game-box="ka-fish"]')  # KA爽爽捕鱼
+        ActionChains(self.driver).move_to_element(lobby_fish).click(goKAfish).perform()
+        time.sleep(13)
+        self.switch_window()
+        time.sleep(1)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 點擊0.1元炮場
+        time.sleep(5)
+        ActionChains(self.driver).move_by_offset(1050, -90).click().perform() # 點擊自動射擊
+        for j in range(3):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # click dou dou
+            time.sleep(2)
+        time.sleep(8)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
 
 
-    '''电子游艺'''
+    '''
+    电子游艺 (AB005)
+    '''
     def goAEelgame(self):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
-        AEelgame = self.driver.find_element_by_css_selector('[game-box="ae"]')  # AE阿米巴电子游艺
+        AEelgame = self.driver.find_element_by_css_selector('[ng-click="toAeHtml()"]')  # AE阿米巴电子游艺
         ActionChains(self.driver).move_to_element(lobby_elgame).click(AEelgame).perform()
         time.sleep(5)
         self.switch_window()
         time.sleep(2)
-        ActionChains(self.driver).move_by_offset(380, 520).click().perform()  # 案"一路發"
+        ActionChains(self.driver).move_by_offset(350, 400).click().perform()  # 案"一本万利"
         self.switch_window()
         time.sleep(6)
-        ActionChains(self.driver).move_by_offset(-160, -180).click().perform()
-        for j in range(3):
+        ActionChains(self.driver).move_by_offset(-590, -50).click().perform()  # click '-'
+        for i in range(4):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 3 確定
+            time.sleep(0.3)
+        ActionChains(self.driver).move_by_offset(430, -50).click().perform()  # 3 確定
+        for j in range(2):
             ActionChains(self.driver).move_by_offset(0, 0).click().perform()
             time.sleep(3)
-        time.sleep(10)
+        time.sleep(8)
         self.driver.close()
         self.switch_window()
         time.sleep(3)
 
     def goPGelgame(self):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
-        PGelgame = self.driver.find_element_by_css_selector('[game-box="pg"]')  # PG电子游艺
+        PGelgame = self.driver.find_element_by_css_selector('[ng-click="toJtnHtml()"]')  # PG电子游艺
         ActionChains(self.driver).move_to_element(lobby_elgame).click(PGelgame).perform()
         time.sleep(5)
         self.switch_window()
@@ -404,22 +427,54 @@ class GameHall(PortalLoginConfig):
 
     def goSWelgame(self):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
-        SWelgame = self.driver.find_element_by_css_selector('[game-box="sw"]')  # 天风电子游艺
+        SWelgame = self.driver.find_element_by_css_selector('[ng-click="toPtsHtml()"]')  # 天风电子游艺
         ActionChains(self.driver).move_to_element(lobby_elgame).click(SWelgame).perform()
-        time.sleep(5)
+        time.sleep(6)
         self.switch_window()
         time.sleep(1)
         ActionChains(self.driver).move_by_offset(350, 150).click().perform()  # 案"天上凤凰"
         self.switch_window()
-        time.sleep(12)
-        ActionChains(self.driver).move_by_offset(-200, 220).click().perform() # "開始"
+        time.sleep(20)
+        ActionChains(self.driver).move_by_offset(-200, 220).click().perform() # "開始遊戲"
         time.sleep(2)
         ActionChains(self.driver).move_by_offset(-280, 70).click().perform()  # "減碼按鈕"
-        for j in range(10):
+        for j in range(9):
             ActionChains(self.driver).move_by_offset(0, 0).click().perform()
             time.sleep(0.5)
         ActionChains(self.driver).move_by_offset(800, 0).click().perform()  # "轉動按鈕"
         for j in range(3):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+            time.sleep(4)
+        time.sleep(10)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
+    def goDTelgame(self):
+        lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
+        DT_elgame = self.driver.find_element_by_css_selector('[ng-click="toDtHtml()"]')  # DT梦想电子游艺
+        ActionChains(self.driver).move_to_element(lobby_elgame).click(DT_elgame).perform()
+        time.sleep(5)
+        self.switch_window()
+        time.sleep(1)
+        ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 案"武松传"
+        self.switch_window()
+        time.sleep(15)
+        ActionChains(self.driver).move_by_offset(-350, 465).click().perform()  # '-'錢
+        time.sleep(2)
+        print('clock (1)')
+        for i in range(5):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+            time.sleep(0.2)
+        time.sleep(1)
+        ActionChains(self.driver).move_by_offset(-190, 0).click().perform()  # '-'數
+        print('click(2)')
+        for j in range(23):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+            time.sleep(0.2)
+        time.sleep(1)
+        ActionChains(self.driver).move_by_offset(1170, -40).click().perform()  # 轉動開始
+        for k in range(3):
             ActionChains(self.driver).move_by_offset(0, 0).click().perform()
             time.sleep(4)
         time.sleep(10)
@@ -434,8 +489,8 @@ class GameHall(PortalLoginConfig):
     '''
     def goSYlottery(self):
         lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "彩票游戏"下拉式選單
-        SY_lotery = self.driver.find_element_by_css_selector('[game-box="sy"]')  # SY双赢彩票
-        ActionChains(self.driver).move_to_element(lobby_lottery).click(SY_lotery).perform()
+        sy_lottery = self.driver.find_element_by_css_selector('[ng-click="toSyLottery()"]')  # SY双赢彩票
+        ActionChains(self.driver).move_to_element(lobby_lottery).click(sy_lottery).perform()
         time.sleep(8)
         self.switch_window()
         time.sleep(2)
@@ -452,9 +507,9 @@ class GameHall(PortalLoginConfig):
         time.sleep(3)
 
     '''体育赛事'''
-    def go3singSport(self):
+    def go3singsport(self):
         lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
-        _3sing_sport = self.driver.find_element_by_css_selector('[game-box="3sing"]')  # 三昇体育
+        _3sing_sport = self.driver.find_element_by_css_selector('[ng-click="toSingSport()"]')  # 三昇体育
         ActionChains(self.driver).move_to_element(lobby_sport).click(_3sing_sport).perform()
         time.sleep(5)
         self.switch_window()
@@ -476,15 +531,17 @@ class GameHall(PortalLoginConfig):
             ActionChains(self.driver).send_keys(Keys.ENTER).perform()
             time.sleep(1)
         ActionChains(self.driver).send_keys(Keys.ENTER).perform()
-        time.sleep(8)
+        time.sleep(5)
+        self.driver.switch_to.alert.accept()  # 關閉彈窗
+        time.sleep(3)
         self.driver.close()
         self.switch_window()
         time.sleep(3)
 
-    def goSABASport(self):
+    def goSABAsport(self):
         lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
-        SABA_sport = self.driver.find_element_by_css_selector('[game-box="saba"]')  # 沙巴体育
-        ActionChains(self.driver).move_to_element(lobby_sport).click(SABA_sport).perform()
+        saba_sport = self.driver.find_element_by_css_selector('[ng-click="toSabaGame()"]')  # 沙巴体育
+        ActionChains(self.driver).move_to_element(lobby_sport).click(saba_sport).perform()
         time.sleep(10)
         self.switch_window()
         ActionChains(self.driver).move_by_offset(-130, -100).click().perform()  # 串關
@@ -504,15 +561,15 @@ class GameHall(PortalLoginConfig):
         self.switch_window()
         time.sleep(3)
 
-    def goCRSport(self):
+    def goCRsport(self):
         lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
-        CR_sport = self.driver.find_element_by_css_selector('[game-box="cr"]')  # 皇冠体育
-        ActionChains(self.driver).move_to_element(lobby_sport).click(CR_sport).perform()
-        time.sleep(10)
+        cr_sport = self.driver.find_element_by_css_selector('[ng-click="toIboSport()"]')  # 皇冠体育
+        ActionChains(self.driver).move_to_element(lobby_sport).click(cr_sport).perform()
+        time.sleep(14)
         self.switch_window()
-        ActionChains(self.driver).move_by_offset(-540, -85).click().perform()  # 综合过关
+        ActionChains(self.driver).move_by_offset(-540, -75).click().perform()  # 综合过关
         time.sleep(4)
-        ActionChains(self.driver).move_by_offset(80, -140).click().perform()  # 明日
+        ActionChains(self.driver).move_by_offset(80, -150).click().perform()  # 明日
         for i in range(3):
             time.sleep(2)
             ActionChains(self.driver).move_by_offset(300, 130).click().perform()  # 串關1
