@@ -535,7 +535,7 @@ class GameHall(PortalLoginConfig):
         for k in range(3):
             ActionChains(self.driver).move_by_offset(0, 0).click().perform()
             time.sleep(5)
-        time.sleep(10)
+        time.sleep(6)
         self.driver.close()
         self.switch_window()
         time.sleep(3)
@@ -604,8 +604,10 @@ class GameHall(PortalLoginConfig):
         self.switch_iframe()
         self.switch_iframe()
         canvas = self.driver.find_element_by_id('GTSLOT0030')
+        time.sleep(2)
         ActionChains(self.driver).move_to_element_with_offset(canvas, 640, 674).click().perform()  # '確認'
         time.sleep(1)
+
         ActionChains(self.driver).move_by_offset(-200, 0).click().perform()
         for i in range(5):
             ActionChains(self.driver).move_by_offset(0, 0).click().perform()
@@ -620,55 +622,93 @@ class GameHall(PortalLoginConfig):
 
     def goJSelgame(self):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
-        JS_elgame = self.driver.find_element_by_css_selector('[ng-click="toJsHtml()"]')  # 战游电子游艺
+        JS_elgame = self.driver.find_element_by_css_selector('[ng-click="toJsHtml()"]')  # JS金龙电子游艺
         ActionChains(self.driver).move_to_element(lobby_elgame).click(JS_elgame).perform()
         time.sleep(5)
         self.switch_window()
         self.switch_iframe()
         time.sleep(1)
-        self.driver.find_element_by_css_selector('[title="街机红楼"]').click()
-        time.sleep(16)
+        self.driver.find_element_by_css_selector('[title="水果机"]').click()
+        time.sleep(12)
         self.switch_window()
         self.switch_iframe()
         canvas = self.driver.find_element_by_id('GameCanvas')
-        ActionChains(self.driver).move_to_element_with_offset(canvas, 700, 400).click().perform()  # '確認'
+        ActionChains(self.driver).move_to_element_with_offset(canvas, 700, 400).click().perform()  # '新手'
         time.sleep(8)
-        ActionChains(self.driver).move_by_offset(250, 200).click().perform()
+        ActionChains(self.driver).move_by_offset(270, 180).click().perform()
+        time.sleep(1)
+        ActionChains(self.driver).move_by_offset(-155, -235).click().perform()
+        time.sleep(15)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
+
+    def goPTelgame(self):
+        lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
+        PT_elgame = self.driver.find_element_by_css_selector('[ng-click="toPtFlash()"]')  # PT电子游艺
+        ActionChains(self.driver).move_to_element(lobby_elgame).click(PT_elgame).perform()
+        time.sleep(5)
+        self.switch_window()
+        self.switch_iframe()
+        time.sleep(1)
+        self.driver.find_element_by_css_selector('[title="招财进宝彩池游戏"]').click()
+        time.sleep(12)
+        self.switch_window()
+        for x in range(3):
+            if len(self.driver.find_elements_by_css_selector('#messageBoxButtonYes')) == 1:
+                messageBoxButton = self.driver.find_element_by_css_selector('#messageBoxButtonYes')
+                ActionChains(self.driver).move_to_element(messageBoxButton).click().perform()
+                time.sleep(1)
+        self.switch_iframe()
+        canvas = self.driver.find_element_by_id('ngm-uicore2-root')
+        ActionChains(self.driver).move_to_element_with_offset(canvas, 350, 620).click().perform()  # '確定'
+        for i in range(10):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+        ActionChains(self.driver).move_by_offset(-150, 0).click().perform()  # '-'
+        for j in range(20):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+        ActionChains(self.driver).move_by_offset(800, 0).click().perform()  # '旋轉'
         time.sleep(6)
+        for k in range(3):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+        time.sleep(6)
+        self.driver.close()
+        self.switch_window()
         self.driver.close()
         self.switch_window()
         time.sleep(3)
 
     '''卡在是否關掉聲音那關，用ActionChain沒有反應'''
-    # def goFBGelgame(self):
-    #     lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
-    #     FBG_elgame = self.driver.find_element_by_css_selector('[ng-click="toJv8Html()"]')  # FBG发宝电子游艺
-    #     ActionChains(self.driver).move_to_element(lobby_elgame).click(FBG_elgame).perform()
-    #     time.sleep(6)
-    #     self.switch_window()
-    #     self.switch_iframe()
-    #     time.sleep(1)
-    #     self.driver.find_element_by_css_selector('[title="松鼠战士"]').click()
-    #     time.sleep(30)
-    #     self.switch_window()
-    #     self.switch_iframe()
-    #     self.switch_iframe()
-    #     self.switch_iframe()
-    #     canvas = self.driver.find_element_by_id('gcore-root')
-    #     ActionChains(self.driver).move_to_element_with_offset(canvas, 720, 600).click().perform()  # 是否開啟聲音
-    #     time.sleep(5)
-    #     ActionChains(self.driver).move_by_offset(330, 170).click().perform()  # '-'數
-    #     for i in range(5):
-    #         ActionChains(self.driver).move_by_offset(0, 0).click().perform()
-    #     ActionChains(self.driver).move_by_offset(-190, 0).click().perform()
-    #     for j in range(25):
-    #         ActionChains(self.driver).move_by_offset(0, 0).click().perform()
-    #     time.sleep(1)
-    #     ActionChains(self.driver).move_by_offset(850, 0).click().perform()  # 轉動開始
-    #     time.sleep(10)
-    #     self.driver.close()
-    #     self.switch_window()
-    #     time.sleep(3)
+    def goFBGelgame(self):
+        lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
+        FBG_elgame = self.driver.find_element_by_css_selector('[ng-click="toJv8Html()"]')  # FBG发宝电子游艺
+        ActionChains(self.driver).move_to_element(lobby_elgame).click(FBG_elgame).perform()
+        time.sleep(6)
+        self.switch_window()
+        self.switch_iframe()
+        time.sleep(1)
+        self.driver.find_element_by_css_selector('[title="松鼠战士"]').click()
+        time.sleep(30)
+        self.switch_window()
+        self.switch_iframe()
+        self.switch_iframe()
+        self.switch_iframe()
+        checkbox = self.driver.find_element_by_css_selector('.button--secondary')
+        self.driver.execute_script("arguments[0].click();", checkbox)
+        time.sleep(3)
+        canvas = self.driver.find_element_by_id('gcore-root')
+        ActionChains(self.driver).move_to_element_with_offset(canvas, 385, 766).click().perform()  # '-'數
+        for i in range(6):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+        ActionChains(self.driver).move_by_offset(-190, 0).click().perform()
+        for j in range(25):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+        time.sleep(1)
+        ActionChains(self.driver).move_by_offset(850, 0).click().perform()  # 轉動開始
+        time.sleep(10)
+        self.driver.close()
+        self.switch_window()
+        time.sleep(3)
     '''
     彩票游戏
     樂透有可能閉盤，就算閉盤也會執行不會報錯。

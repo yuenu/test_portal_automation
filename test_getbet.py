@@ -24,7 +24,7 @@ class PortalLoginTest(unittest.TestCase):
 
 
 
-        #self.game.goFBGelgame()
+        self.game.goFBGelgame()
         # 別種定位
         # self.game.goSGelgame()
 
@@ -35,8 +35,9 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goSWelgame()
         # self.game.goDTelgame()
         # self.game.goGPKelgame()
+        # self.game.goJSelgame()
         # self.game.goGPK2elgame()
-        self.game.goJSelgame()
+        # self.game.goPTelgame()
 
         # 捕魚 - 確認ok
         # self.game.goAPfish()
