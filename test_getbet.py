@@ -22,32 +22,42 @@ class PortalLoginTest(unittest.TestCase):
 
         # self.game.goSYlottery()
 
+
+
+        #self.game.goFBGelgame()
+        # 別種定位
+        # self.game.goSGelgame()
+
+        # 電子 - 確認ok
+        # self.game.goTOGelgame()
+        # self.game.goAEelgame()
         # self.game.goPGelgame()
         # self.game.goSWelgame()
-        # self.game.goAEelgame()
         # self.game.goDTelgame()
-        #self.game.goSGelgame()
-        self.game.goTOGelgame()
+        # self.game.goGPKelgame()
+        # self.game.goGPK2elgame()
+        self.game.goJSelgame()
 
+        # 捕魚 - 確認ok
+        # self.game.goAPfish()
+        # self.game.goGPKfish()
+        # self.game.goFGfish()
+        # self.game.goJDBfish()
+        # self.game.goLEGfish()
+        # self.game.goVGfish()
+        # self.game.goMWfish()
+        # self.game.goFGbird()
+        # self.game.goTHfish()
 
+        # 太花錢
+        # self.game.goMTfish()
 
-
-        # 待確認 self.game.goMWfish()
-
-
+        # AB007沒有AB005、AB006有的,已ok
         # self.game.goBSPfish()
+        # self.game.goICGfish()
         # self.game.goGPK2fish()
         # self.game.goKAfish()
 
-        # self.game.goAPfish()
-        # self.game.goGPKfish()
-        # self.game.goJDBfish()
-        # self.game.goLEGfish()
-        # self.game.goMTfish()
-        # self.game.goVGfish()
-        # self.game.goFGfish()
-        # self.game.goFGbird()
-        # self.game.goTHfish()
 
 if __name__ == "__main__":
     unittest.main()
