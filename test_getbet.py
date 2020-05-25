@@ -17,16 +17,16 @@ class PortalLoginTest(unittest.TestCase):
         self.portal.login()
         time.sleep(3)
         # self.game.goCRsport()
-        # self.game.go3singsport()
+        self.game.go3singsport()
         # self.game.goSABAsport()
 
+        # 彩票 - 確認ok
         # self.game.goSYlottery()
+        # self.game.goIGlottery()
 
-
-
-        self.game.goFBGelgame()
-        # 別種定位
+        # 別種定位 , 複雜定位  目前解決不了
         # self.game.goSGelgame()
+        # self.game.goFBGelgame()
 
         # 電子 - 確認ok
         # self.game.goTOGelgame()
@@ -34,30 +34,35 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goPGelgame()
         # self.game.goSWelgame()
         # self.game.goDTelgame()
-        # self.game.goGPKelgame()
+        #self.game.goGPK2elgame()
         # self.game.goJSelgame()
-        # self.game.goGPK2elgame()
         # self.game.goPTelgame()
+        # self.game.goJDBelgame()
+        # self.game.goHBelgame()
+        # self.game.goSYelgame()
+        # self.game.goFGelgame()
+        # self.game.goKAelgame()
+        # self.game.goGPKelgame()
 
         # 捕魚 - 確認ok
-        # self.game.goAPfish()
-        # self.game.goGPKfish()
-        # self.game.goFGfish()
-        # self.game.goJDBfish()
-        # self.game.goLEGfish()
-        # self.game.goVGfish()
-        # self.game.goMWfish()
-        # self.game.goFGbird()
-        # self.game.goTHfish()
+        self.game.goAPfish()
+        self.game.goGPKfish()
+        self.game.goFGfish()
+        self.game.goJDBfish()
+        self.game.goLEGfish()
+        self.game.goVGfish()
+        self.game.goMWfish()
+        self.game.goFGbird()
+        self.game.goTHfish()
 
         # 太花錢
         # self.game.goMTfish()
 
         # AB007沒有AB005、AB006有的,已ok
-        # self.game.goBSPfish()
-        # self.game.goICGfish()
-        # self.game.goGPK2fish()
-        # self.game.goKAfish()
+        self.game.goBSPfish()
+        self.game.goICGfish()
+        self.game.goGPK2fish()
+        self.game.goKAfish()
 
 
 if __name__ == "__main__":
