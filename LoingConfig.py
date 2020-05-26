@@ -6,7 +6,7 @@ from selenium import webdriver
 from idenitfy import idenitfy_img
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import ElementNotInteractableException,NoSuchElementException
+from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException, UnexpectedAlertPresentException
 
 pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
 
@@ -14,14 +14,14 @@ pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
 class PortalLoginConfig(object):
     driver = webdriver.Chrome()
     driver.set_window_size(1080, 800)
-    driver.get('http://www.rfben.com/')
+    driver.get('http://www.fnjtd.com/')
     '''
     AB005 - http://www.fnjtd.com/
     AB006 - http://www.rfben.com/
     AB007 - http://www.jp777.net/
     '''
     def __init__(self):
-        self.account = 'yuenu001'
+        self.account = 'yuenu002'
         self.password = 'a123456'
         self.filepath = f'./recaptcha/captcha.png'
 
@@ -72,7 +72,7 @@ class PortalLoginConfig(object):
 
     def clickLoginIn(self):
         self.driver.find_element_by_css_selector('#login-box').click()
-        time.sleep(2)
+        time.sleep(1)
         self.device_verification()
         self.isAnnuncement()
 
@@ -82,7 +82,6 @@ class PortalLoginConfig(object):
         alert = soup.find_all(class_='custom-modal')
         valid = soup.select("#cms-modal-input")
         if len(alert) == 1 or len(valid) == 1:
-            print('valid:', valid)
             for i in range(10):
                 soup = BeautifulSoup(self.driver.page_source, 'lxml')
                 alert = soup.find_all(class_='custom-modal')
@@ -96,9 +95,8 @@ class PortalLoginConfig(object):
 
                 elif len(alert) == 1 and len(valid) == 1:
                     print('跨區驗證')
-                    time.sleep(0.5)
+                    time.sleep(1)
                     self.driver.find_element_by_xpath('//*[@id="cms-modal-input"]').send_keys('123456')
-                    time.sleep(0.5)
                     self.driver.find_element_by_css_selector('[ng-click="ok()"]').click()
                     time.sleep(5)
                     self.device_verification()
@@ -517,7 +515,7 @@ class GameHall(PortalLoginConfig):
         self.switch_iframe()
         time.sleep(1)
         self.driver.find_element_by_css_selector('[title="大闹天宫"]').click()  # 大闹天宫
-        time.sleep(25)
+        time.sleep(30)
         self.switch_window()
         self.switch_iframe()
         canvas = self.driver.find_element_by_id('GameLauncher')
@@ -713,7 +711,7 @@ class GameHall(PortalLoginConfig):
         self.switch_iframe()
         time.sleep(1)
         self.driver.find_element_by_css_selector('[title="银行大劫案"]').click()
-        time.sleep(15)
+        time.sleep(20)
         self.switch_window()
         self.switch_iframe()
         time.sleep(1)
@@ -831,7 +829,7 @@ class GameHall(PortalLoginConfig):
         self.driver.switch_to.frame(frame2)
         self.switch_frame()
         time.sleep(1)
-        bet = self.driver.find_element_by_xpath(f'/html/body/form/div[2]/div/div/table/tbody/tr[6]/td[4]/table/tbody/tr[2]/td[2]/a')
+        bet = self.driver.find_element_by_xpath(f'/html/body/form/div[2]/div/div/table/tbody/tr[6]/td[4]/table/tbody/tr[1]/td[2]/a')
         bet.click()
         time.sleep(0.5)
         ActionChains(self.driver).move_to_element_with_offset(bet, 0, 124).click().perform()
@@ -848,9 +846,9 @@ class GameHall(PortalLoginConfig):
         ActionChains(self.driver).send_keys(Keys.ENTER).perform()
         time.sleep(1)
         ActionChains(self.driver).send_keys(Keys.ENTER).perform()
+        time.sleep(4)
+        self.driver.switch_to.alert.accept()
         time.sleep(3)
-        self.driver.switch_to.alert().accept()
-        time.sleep(2)
         self.close_window_buffer()
 
     def goSABAsport(self):
@@ -902,5 +900,94 @@ class GameHall(PortalLoginConfig):
             ActionChains(self.driver).move_by_offset(-300, -490).click().perform()  # 在案一次明日
         self.driver.close()
         self.switch_window()
+        time.sleep(5)
+
+class UserSimulation(PortalLoginConfig):
+
+    def BetRecoed(self):
+        self.driver.find_element_by_css_selector('#account-nav [title="投注记录"]').click()
+        time.sleep(3)
+        betdetail = self.driver.find_element_by_css_selector('[ng-click="toggleMemberCenterWidth()"]')
+        self.driver.execute_script("arguments[0].scrollIntoView();", betdetail)
+        time.sleep(5)
+
+    def WithdrawApplication(self):
+        self.driver.find_element_by_css_selector('#account-nav [title="线上取款"]').click()
+        time.sleep(2)
+        withdrawType = self.driver.find_elements_by_css_selector('[ng-model="applyParams.withdrawType"]')
+        if len(withdrawType) ==1:
+            withdrawType.click()  # 取款方式 - 銀行
+        time.sleep(2)
+        self.driver.find_element_by_css_selector('#inputAmount').send_keys('1')  # 取款金额
+        time.sleep(3)
+        self.driver.find_element_by_css_selector('#money-pwd-input').send_keys('a123456')  # 取款密码
+        time.sleep(1)
+        self.driver.find_element_by_css_selector('.btn.btn-submit').click()
+        time.sleep(2)
+        self.driver.find_element_by_css_selector('[ng-click="ok()"]').click()
         time.sleep(3)
 
+    def Deposit(self):
+        self.driver.find_element_by_css_selector('#account-nav [title="线上存款"]').click()
+        time.sleep(3)
+        self.driver.find_element_by_link_text('公司入款').click()
+        self.switch_window()
+        time.sleep(3)
+        bank_input = self.driver.find_element_by_css_selector('#bank-input')
+        ActionChains(self.driver).move_to_element(bank_input).click().perform()
+        time.sleep(2)
+        ActionChains(self.driver).move_to_element_with_offset(bank_input, 0, 40).click().perform()  # 中國農業銀行
+        time.sleep(1)
+        self.driver.find_element_by_css_selector('[name="accountId"]').click()
+        time.sleep(1)
+        self.driver.find_element_by_css_selector('[ng-show="Accounts[depositType].length"]').click()  # 下一步
+        time.sleep(2)
+        self.driver.find_element_by_css_selector('#amount').send_keys('1')  # 存款金額
+        time.sleep(2)
+        self.driver.find_element_by_css_selector('#depositName').send_keys('yue')  # 存款人姓名
+        time.sleep(2)
+        self.driver.find_elements_by_css_selector('[ng-model="params.type"]')[6].click()  # 其他
+        time.sleep(1)
+        self.driver.find_elements_by_css_selector('.footer-btn button.ng-binding')[2].click()  # 提交申請
+        time.sleep(3)
+        self.driver.find_element_by_css_selector('[ng-disabled="isProcessing"]').click()  # 確認
+        time.sleep(2)
+        self.driver.find_element_by_css_selector('[ng-click="closeWindow()"]').click()  # 關閉視窗
+        self.switch_window()
+        self.driver.execute_script("window.scrollTo(0,0)")
+        time.sleep(3)
+
+    def Transaction(self):
+        self.driver.find_element_by_css_selector('#account-nav [title="交易记录"]').click()
+        time.sleep(3)
+        for i in range(4):
+            self.driver.find_elements_by_css_selector('.btn.btn-default.btn-sm')[int('{}'.format(i))].click()
+            time.sleep(2)
+        time.sleep(3)
+
+    def ChangeMoneyPassword(self):
+        self.driver.find_element_by_css_selector('#account-nav [title="修改取款密码"]').click()
+        time.sleep(3)
+
+    def SecurityList_sendEmail(self):
+        self.driver.find_element_by_css_selector('#account-nav [title="会员中心"]').click()
+        time.sleep(3)
+        self.driver.find_element_by_css_selector('[title="站內信件"]').click()
+        time.sleep(3)
+        openNewMail = self.driver.find_element_by_css_selector('[ng-click="openNewMail()"]')  # 发信
+        self.driver.execute_script("arguments[0].scrollIntoView();", openNewMail)
+        time.sleep(1)
+        openNewMail.click()
+        time.sleep(3)
+        self.driver.find_element_by_css_selector('.form-control.ng-pristine.ng-invalid.ng-invalid-required').send_keys('TestMessageByYue')  # 主旨
+        self.switch_iframe()
+        time.sleep(1)
+        self.driver.find_element_by_css_selector('body').send_keys('TestByYueBodyMessage')  # 內容
+        time.sleep(3)
+        self.driver.switch_to.default_content()
+        self.driver.find_element_by_css_selector('.btn.btn-blue.pull-right.ng-binding').click()  # 送出
+        time.sleep(2)
+        self.driver.find_element_by_css_selector('[ng-click="ok()"]').click()
+        time.sleep(2)
+        self.driver.execute_script("window.scrollTo(0,0)")
+        time.sleep(3)
