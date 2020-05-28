@@ -4,11 +4,14 @@ import pytesseract
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from parserImage import idenitfy_img
+from functionlist import member
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException, UnexpectedAlertPresentException
 
 pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
+
+
 
 
 class PortalLoginConfig(object):
@@ -22,14 +25,14 @@ class PortalLoginConfig(object):
     '''
     def __init__(self):
         self.account = 'yuenu002'
-        self.password = 'a123456'
+        self.password = 'a654321'
         self.filepath = f'./recaptcha/captcha.png'
 
     def isAnnuncement(self):
         soup = BeautifulSoup(self.driver.page_source, 'lxml')
         announcement_element = soup.select('div.show#marquee-wrapper')
         announcement2 = soup.find_all(class_='modal-overlay modal-show')
-        time.sleep(3)
+        time.sleep(2)
         if len(announcement_element) != 0:
             self.driver.find_element_by_xpath('//*[@id="marquee"]/footer/span').click()
         else:
@@ -50,11 +53,11 @@ class PortalLoginConfig(object):
 
 
     def sendUserInfo(self, account, password):
-        time.sleep(1)
-        self.driver.find_element_by_id('login_account').send_keys(self.account)
+        time.sleep(1.5)
+        self.driver.find_element_by_id('login_account').send_keys(account)
         self.driver.find_element_by_id('login_password').send_keys(self.password)
 
-    def parsingPageSourceAndSaveImageSendCode(self, filepath):
+    def parsingPageSourceAndSaveImageSendCode(self):
         self.driver.find_element_by_css_selector('#login_code').click()
         time.sleep(2.5)
         soup = BeautifulSoup(self.driver.page_source, 'lxml')
@@ -89,7 +92,7 @@ class PortalLoginConfig(object):
                 if len(alert) == 1 and len(valid) == 0:
                     print('驗證碼錯誤')
                     self.driver.find_element_by_css_selector('[ng-click="ok()"]').click()
-                    self.parsingPageSourceAndSaveImageSendCode(self.filepath)
+                    self.parsingPageSourceAndSaveImageSendCode()
                     self.clickLoginIn()
                     time.sleep(2)
 
@@ -109,13 +112,13 @@ class PortalLoginConfig(object):
     def login(self):
         self.isAnnuncement()
         self.sendUserInfo(self.account, self.password)
-        self.parsingPageSourceAndSaveImageSendCode(self.filepath)
+        self.parsingPageSourceAndSaveImageSendCode()
         self.clickLoginIn()
         self.loginFail()
         time.sleep(2)
 
     def logout(self):
-        self.driver.get('http://www.fnjtd.com/Account/SignOut')
+        self.driver.get('http://www.jp777.net/Account/SignOut')
 
     def switch_window(self):
         windows = self.driver.window_handles  # 獲得當前瀏覽器所有視窗
@@ -815,6 +818,30 @@ class GameHall(PortalLoginConfig):
         time.sleep(8)
         self.close_window_buffer()
 
+    def goPNGelgame(self):
+        lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
+        png_elgame = self.driver.find_element_by_css_selector('[ng-click="toPngHtml()"]')  # PNG电子游艺
+        ActionChains(self.driver).move_to_element(lobby_elgame).click(png_elgame).perform()
+        time.sleep(5)
+        self.switch_window()
+        self.switch_iframe()
+        time.sleep(1)
+        self.driver.find_element_by_css_selector('[title="好运招财猫"]').click()
+        time.sleep(14)
+        self.switch_window()
+        self.switch_iframe()
+        self.switch_iframe()
+        time.sleep(1)
+        canvas = self.driver.find_element_by_css_selector('#pngCasinoGame')
+        ActionChains(self.driver).move_to_element_with_offset(canvas, 640, 660).click().perform()
+        time.sleep(5)
+        ActionChains(self.driver).move_by_offset(-210, 50).click().perform()  # '-'
+        for i in range(4):
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()
+        ActionChains(self.driver).move_by_offset(590, -10).click().perform()
+        time.sleep(8)
+        self.close_window_buffer()
+
     '''
     彩票游戏
     樂透有可能閉盤，目前解決方式是如果閉盤換另一個盤下注，如果兩個盤都閉盤就會報錯
@@ -970,8 +997,8 @@ class UserSimulation(PortalLoginConfig):
         self.driver.find_element_by_css_selector('#account-nav [title="线上取款"]').click()
         time.sleep(2)
         withdrawType = self.driver.find_elements_by_css_selector('[ng-change="payTypeChange()"]')
-        if len(withdrawType) == 1:
-            withdrawType.click()  # 取款方式 - 銀行
+        if len(withdrawType) != 0:
+            self.driver.find_element_by_css_selector('[ng-change="payTypeChange()"]').click()  # 取款方式 - 銀行
         time.sleep(2)
         self.driver.find_element_by_css_selector('#inputAmount').send_keys('1')  # 取款金额
         time.sleep(3)
@@ -1207,7 +1234,7 @@ class entergmae(PortalLoginConfig):
     def enterJDBboard(self):
         lobby_board = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[2]/a')  # "棋牌游戏"下拉式選單
         JDB_board = self.driver.find_element_by_css_selector('[ng-click="toJdbBoard()"]')  # JDB夺宝棋牌
-        ActionChains(self.driver).move_to_element(lobby_board).click(FS_board).perform()
+        ActionChains(self.driver).move_to_element(lobby_board).click(JDB_board).perform()
         time.sleep(5)
         self.switch_window()
         self.switch_iframe()
@@ -1425,3 +1452,126 @@ class entergmae(PortalLoginConfig):
         time.sleep(1)
         self.switch_window()
         self.close_window_buffer()
+
+    '''体育赛事'''
+    def enterSABAsport(self):
+        lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
+        saba_sport = self.driver.find_element_by_css_selector('[ng-click="toSabaGame()"]')  # 沙巴体育
+        ActionChains(self.driver).move_to_element(lobby_sport).click(saba_sport).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enter3singsport(self):
+        lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
+        _3sing_sport = self.driver.find_element_by_css_selector('[ng-click="toSingSport()"]')  # 三昇体育
+        ActionChains(self.driver).move_to_element(lobby_sport).click(_3sing_sport).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enterBBINsport(self):
+        lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
+        bbin_sport = self.driver.find_element_by_css_selector('[ng-click="toBbSport()"]')  # BBIN体育
+        ActionChains(self.driver).move_to_element(lobby_sport).click(bbin_sport).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enterCMDsport(self):
+        lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
+        cmd_sport = self.driver.find_element_by_css_selector('[ng-click="toCmdSport()"]')  # CMD体育
+        ActionChains(self.driver).move_to_element(lobby_sport).click(cmd_sport).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enterIMsport(self):
+        lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
+        im_sport = self.driver.find_element_by_css_selector('[ng-click="toImSport()"]')  # IM体育
+        ActionChains(self.driver).move_to_element(lobby_sport).click(im_sport).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enterCRsport(self):
+        lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
+        cr_sport = self.driver.find_element_by_css_selector('[ng-click="toIboSport()"]')  # 皇冠体育
+        ActionChains(self.driver).move_to_element(lobby_sport).click(cr_sport).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enterDTsport(self):
+        lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
+        dt_sport = self.driver.find_element_by_css_selector('[ng-click="toDtESport()"]')  # DT泛亚电竞
+        ActionChains(self.driver).move_to_element(lobby_sport).click(dt_sport).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    '''彩票'''
+    def enterGPKlottery(self):
+        lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "体育赛事"下拉式選單
+        gpk_lottery = self.driver.find_element_by_css_selector('[ng-click="toGpkLotteryVideo()"]')  # GPK视讯彩票
+        ActionChains(self.driver).move_to_element(lobby_lottery).click(gpk_lottery).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enterGPK2lottery(self):
+        lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "体育赛事"下拉式選單
+        gpk2_lottery = self.driver.find_element_by_css_selector('[ng-click="toGpk2Lottery()"]')  # GPK2战游彩票
+        ActionChains(self.driver).move_to_element(lobby_lottery).click(gpk2_lottery).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enterGPK3lottery(self):
+        lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "体育赛事"下拉式選單
+        gpk3_lottery = self.driver.find_element_by_css_selector('[ng-click="toGpkLotterySport()"]')  # GPK3运彩彩票
+        ActionChains(self.driver).move_to_element(lobby_lottery).click(gpk3_lottery).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enterLLlottery(self):
+        lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "体育赛事"下拉式選單
+        ll_lottery = self.driver.find_element_by_css_selector('[ng-click="toLlLottery()"]')  # LL乐利彩票
+        ActionChains(self.driver).move_to_element(lobby_lottery).click(ll_lottery).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enterLBlottery(self):
+        lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "体育赛事"下拉式選單
+        lb_lottery = self.driver.find_element_by_css_selector('[ng-click="toLbLottery()"]')  # LB快乐彩
+        ActionChains(self.driver).move_to_element(lobby_lottery).click(lb_lottery).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enterSYlottery(self):
+        lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "体育赛事"下拉式選單
+        sy_lottery = self.driver.find_element_by_css_selector('[ng-click="toSyLottery()"]')  # SY双赢彩票
+        ActionChains(self.driver).move_to_element(lobby_lottery).click(sy_lottery).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enterBBINlottery(self):
+        lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "体育赛事"下拉式選單
+        bbin_lottery = self.driver.find_element_by_css_selector('[ng-click="toBbLottery()"]')  # BBIN彩票
+        ActionChains(self.driver).move_to_element(lobby_lottery).click(bbin_lottery).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+
+    def enterIGlottery(self):
+        lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "体育赛事"下拉式選單
+        ig_lottery = self.driver.find_element_by_css_selector('[ng-click="toIgLottery()"]')  # IG彩票
+        ActionChains(self.driver).move_to_element(lobby_lottery).click(ig_lottery).perform()
+        time.sleep(1.5)
+        self.switch_window()
+        self.close_window_buffer()
+

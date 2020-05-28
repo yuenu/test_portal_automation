@@ -1,9 +1,5 @@
 
 member = [
-    'QA_YT0007999991',
-    'QA_YT0007999992',
-    'QA_YT0007999993',
-    'QA_YT0007999994',
     'QA_YT0007999995',
     'QA_YT0007999996',
     'QA_YT0007999997',
@@ -33,7 +29,6 @@ game_list = [
     'self.game.goLEGfish()',
     'self.game.goIGlottery()',
     'self.game.goICGfish()',
-    'self.game.goKAfish()',
     'self.game.goBSPfish()',
     'self.game.goPNGelgame()'
 ]
