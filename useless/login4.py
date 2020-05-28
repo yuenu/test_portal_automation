@@ -8,7 +8,7 @@ import base64
 import pytesseract
 from PIL import Image
 from bs4 import BeautifulSoup
-from idenitfy import idenitfy_img
+from parserImage import idenitfy_img
 
 pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
 
