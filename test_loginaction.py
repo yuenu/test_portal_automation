@@ -1,6 +1,7 @@
 import unittest
 import time
 import random
+from selenium import webdriver
 from LoingConfig import PortalLoginConfig, GameHall, UserSimulation ,entergmae
 from functionlist import usersimulation_list, game_list, entergame_list, member
 
@@ -8,10 +9,21 @@ from functionlist import usersimulation_list, game_list, entergame_list, member
 class PortalLoginTest(unittest.TestCase):
 
     def setUp(self):
-        self.portal = PortalLoginConfig()
-        self.game = GameHall()
-        self.user = UserSimulation()
-        self.entergame = entergmae()
+
+        """
+        AB005 - http://www.fnjtd.com/
+        AB006 - http://www.rfben.com/
+        AB007 - http://www.jp777.net/
+        """
+
+        driver = webdriver.Chrome()
+        driver.set_window_size(1080, 800)
+        driver.get('http://www.jp777.net/')
+
+        self.portal = PortalLoginConfig(driver)
+        self.game = GameHall(driver)
+        self.user = UserSimulation(driver)
+        self.entergame = entergmae(driver)
         self.filepath = f'./recaptcha/captcha.png'
         self.password = 'a654321'
 
@@ -23,11 +35,9 @@ class PortalLoginTest(unittest.TestCase):
     def getUserSimulation(self):
 
         """
-
         Portal端使用者模擬做取2~3個
         玩遊戲下注取1~2個
         開啟遊戲1秒後關閉取0~1個
-
         """
 
         all_list = []
@@ -50,17 +60,19 @@ class PortalLoginTest(unittest.TestCase):
 
     def test_captcha_pass(self):
         for index in range(len(member)):
-            print(member.pop(0))
-           # self.portal.isAnnuncement()
-            self.portal.sendUserInfo(member.pop(0), self.password)
+            member_now = member.pop(0)
+            print(member_now)
+            self.portal.isAnnuncement()
+            self.portal.sendUserInfo(member_now, self.password)
             self.portal.parsingPageSourceAndSaveImageSendCode()
             self.portal.clickLoginIn()
             self.portal.loginFail()
             time.sleep(2)
             self.getUserSimulation()
-            time.sleep(3)
+            time.sleep(2)
             self.portal.logout()
-            time.sleep(5)
+            time.sleep(6)
+
 
         #  UserSimulation
         # self.user.BetRecoed()
@@ -82,7 +94,7 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goFBGelgame()
 
         # 電子 - 確認ok
-        # self.game.goPGelgame() # 待修
+        # self.game.goPGelgame()
         # self.game.goTOGelgame()
         # self.game.goAEelgame()
         # self.game.goSWelgame()
@@ -97,8 +109,12 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goGPKelgame()
         # self.game.goKAelgame()
         # self.game.goPNGelgame()
+        # self.game.goMTelgame()
+        # self.game.goGHelgame()
+        # self.game.goICGelgame()
 
         # 捕魚 - 確認ok
+        # self.game.goTHfish()
         # self.game.goAPfish()
         # self.game.goGPKfish()
         # self.game.goFGfish()
@@ -108,11 +124,12 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goMWfish()
         # self.game.goFGbird()
         # self.game.goMTfish()
-        # self.game.goTHfish()
         # self.game.goICGfish()
-        # self.game.goKAfish()
         # self.game.goBSPfish()
 
+
+
+        # self.game.goKAfish()
         # AB007沒有AB005、AB006有的,已ok
         # self.game.goGPK2fish()
 

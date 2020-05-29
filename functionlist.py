@@ -1,11 +1,30 @@
 
 member = [
+    'QA_YT0007999981',
+    'QA_YT0007999982',
+    'QA_YT0007999983',
+    'QA_YT0007999984',
+    'QA_YT0007999985',
+    'QA_YT0007999986',
+    'QA_YT0007999987',
+    'QA_YT0007999988',
+    'QA_YT0007999989',
+    'QA_YT0007999990',
+    'QA_YT0007999991',
+    'QA_YT0007999992',
+    'QA_YT0007999993',
+    'QA_YT0007999994',
     'QA_YT0007999995',
     'QA_YT0007999996',
     'QA_YT0007999997',
     'QA_YT0007999998',
     'QA_YT0007999999',
     'QA_YT0008000000',
+]
+
+memberadd  = [
+
+
 ]
 
 usersimulation_list = [
@@ -18,19 +37,36 @@ usersimulation_list = [
 ]
 
 game_list = [
+    'self.game.goPGelgame()',
+    'self.game.goTOGelgame()',
     'self.game.goAEelgame()',
     'self.game.goSWelgame()',
+    'self.game.goDTelgame()',
+    'self.game.goGPK2elgame()',
     'self.game.goJSelgame()',
+    'self.game.goPTelgame()',
+    'self.game.goJDBelgame()',
     'self.game.goHBelgame()',
+    'self.game.goSYelgame()',
+    'self.game.goFGargame()',
+    'self.game.goGPKelgame()',
+    'self.game.goKAelgame()',
+    'self.game.goPNGelgame()',
+    'self.game.goMTelgame()',
+    'self.game.goGHelgame()',
+    'self.game.goICGelgame()',
+    'self.game.goTHfish()',
     'self.game.goAPfish()',
-    'self.game.goFGbird()',
     'self.game.goGPKfish()',
-    'self.game.goVGfish()',
+    'self.game.goFGfish()',
+    'self.game.goJDBfish()',
     'self.game.goLEGfish()',
-    'self.game.goIGlottery()',
+    'self.game.goVGfish()',
+    'self.game.goMWfish()',
+    'self.game.goFGbird()',
+    'self.game.goMTfish()',
     'self.game.goICGfish()',
     'self.game.goBSPfish()',
-    'self.game.goPNGelgame()'
 ]
 
 entergame_list = [
