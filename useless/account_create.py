@@ -4,32 +4,32 @@ from openpyxl import load_workbook
 
 # Create same type xlsl file
 def CreateFile():
-    for i in range(31,51):
+    for i in range(41, 61):
         wb = load_workbook('./AccountCreate/AccountExaple.xlsx')
         wb.save(f'./AccountCreate/Accounttest{i}.xlsx')
 
 
 def WriteData():
-    account = 'QA_YT'
+    account = 'QA_DS'
 
     # 從會員數多少開始
-    nums_start = 7000000
+    nums_start = 1
 
     # 一個Excel檔要產生多少個會員
     One_time_num = 200000
 
-    for times in range(36, 41):
+    for times in range(41, 61):
         save_path = f'./AccountCreate/accounttest{times}.xlsx'
         wb = load_workbook(save_path)
         ws = wb.active
 
-        for index,num in enumerate(range(nums_start, nums_start + One_time_num),1):
+        for index, num in enumerate(range(nums_start, nums_start + One_time_num), 1):
             # 對應Excel的格式寫入檔案
-            ws[f'A{index+1}'] = 'QA_1'
-            ws[f'B{index+1}'] = 'QA_2'
-            ws[f'C{index+1}'] = 'QA_3'
-            ws[f'D{index+1}'] = 'QA_4'
-            ws[f'E{index+1}'] = account + str(num+1).zfill(10)
+            ws[f'A{index+1}'] = 'QAfourmillionA'
+            ws[f'B{index+1}'] = 'QAfourmillionB'
+            ws[f'C{index+1}'] = 'QAfourmillionC'
+            ws[f'D{index+1}'] = 'QAfourmillionD'
+            ws[f'E{index+1}'] = account + str(num).zfill(10)
             ws[f'F{index+1}'] = 'a123456'
             ws[f'G{index+1}'] = 'a123456'
             
@@ -37,11 +37,11 @@ def WriteData():
             ws[f'I{index+1}'] = '1234567890'
             ws[f'J{index+1}'] = 'example1@qq.com'
             ws[f'K{index+1}'] = '1234567890'
-            ws[f'L{index+1}'] = '11'
+            ws[f'L{index+1}'] = '0'
             ws[f'M{index+1}'] = '是'
 
             ws[f'N{index+1}'] = '男'
-            ws[f'O{index+1}'] = '2000/01/01'
+            ws[f'O{index+1}'] = '2012/12/12'
             ws[f'P{index+1}'] = 'exampleweixin1'
             ws[f'Q{index+1}'] = '建设银行'
             ws[f'R{index+1}'] = '山西省'
@@ -52,5 +52,5 @@ def WriteData():
         wb.save(save_path)
         nums_start =  nums_start + One_time_num
 
-#CreateFile()
+# CreateFile()
 WriteData()

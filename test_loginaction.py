@@ -41,13 +41,13 @@ class PortalLoginTest(unittest.TestCase):
         """
 
         all_list = []
-        user_times = random.randint(2, 3)
+        user_times = random.randint(0, 2)
         user_randomlist = random.sample(usersimulation_list, user_times)
 
-        game_times = random.randint(1, 2)
+        game_times = random.randint(2, 3)
         game_randomlist = random.sample(game_list, game_times)
 
-        entergame_times = random.randint(0, 1)
+        entergame_times = random.randint(1, 2)
         entergame_randomlist = random.sample(entergame_list, entergame_times)
 
         all_list.extend(user_randomlist)
@@ -59,20 +59,23 @@ class PortalLoginTest(unittest.TestCase):
             eval(action)
 
     def test_captcha_pass(self):
-        for index in range(len(member)):
-            member_now = member.pop(0)
-            print(member_now)
-            self.portal.isAnnuncement()
-            self.portal.sendUserInfo(member_now, self.password)
-            self.portal.parsingPageSourceAndSaveImageSendCode()
-            self.portal.clickLoginIn()
-            self.portal.loginFail()
-            time.sleep(2)
-            self.getUserSimulation()
-            time.sleep(2)
-            self.portal.logout()
-            time.sleep(6)
+        # for index in range(len(member)):
+        #     member_now = member.pop(0)
+        #     print(member_now)
+        #     self.portal.isAnnuncement()
+        #     self.portal.sendUserInfo(member_now, self.password)
+        #     self.portal.parsingPageSourceAndSaveImageSendCode()
+        #     self.portal.clickLoginIn()
+        #     self.portal.loginFail()
+        #     time.sleep(2)
+        #     self.getUserSimulation()
+        #     time.sleep(2)
+        #     self.portal.logout()
+        #     time.sleep(6)
 
+
+        self.portal.login()
+        time.sleep(3)
 
         #  UserSimulation
         # self.user.BetRecoed()
@@ -82,8 +85,12 @@ class PortalLoginTest(unittest.TestCase):
         # self.user.SecurityList_sendEmail()
 
         # 彩票 - 確認ok
-        # self.game.goSYlottery()
         # self.game.goIGlottery()
+        # self.game.goSYlottery()
+        # self.game.goGPKlotteryvideo()
+        # self.game.goGPKlottery()
+        # self.game.goGPK3lottery()
+        # self.game.goGPK2lottery()
 
         # 體育(暫緩，串關定位要研究)
         # self.game.go3singsport()
@@ -112,9 +119,11 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goMTelgame()
         # self.game.goGHelgame()
         # self.game.goICGelgame()
+        # self.game.goR8elgame()
+        # self.game.goPPelgame()
 
         # 捕魚 - 確認ok
-        # self.game.goTHfish()
+        # self.game.goKAfish()
         # self.game.goAPfish()
         # self.game.goGPKfish()
         # self.game.goFGfish()
@@ -126,10 +135,9 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goMTfish()
         # self.game.goICGfish()
         # self.game.goBSPfish()
+        # self.game.goTHfish()
 
 
-
-        # self.game.goKAfish()
         # AB007沒有AB005、AB006有的,已ok
         # self.game.goGPK2fish()
 

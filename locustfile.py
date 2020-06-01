@@ -15,7 +15,7 @@ from selenium.common.exceptions import ElementNotInteractableException, NoSuchEl
 pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
 
 class QuickstartUser(HttpUser):
-    wait_time = between(5, 9)
+    wait_time = between(35, 60)
 
     def on_start(self):
         driver = webdriver.Chrome()
@@ -30,19 +30,22 @@ class QuickstartUser(HttpUser):
 
     @task(1)
     def test_LoginSimulation(self):
-        for index in range(len(member)):
-            member_now = member.pop(0)
-            print(member_now)
-            self.portal.isAnnuncement()
-            self.portal.sendUserInfo(member_now, self.password)
-            self.portal.parsingPageSourceAndSaveImageSendCode()
-            self.portal.clickLoginIn()
-            self.portal.loginFail()
-            time.sleep(2)
-            self.getUserSimulation()
-            time.sleep(2)
-            self.portal.logout()
-            time.sleep(6)
+        if member:
+            for index in range(len(member)):
+                member_now = member.pop(0)
+                print(member_now)
+                self.portal.isAnnuncement()
+                self.portal.sendUserInfo(member_now, self.password)
+                self.portal.parsingPageSourceAndSaveImageSendCode()
+                self.portal.clickLoginIn()
+                self.portal.loginFail()
+                time.sleep(2)
+                self.getUserSimulation()
+                time.sleep(2)
+                self.portal.logout()
+                time.sleep(6)
+        else:
+            self.portal.close_window()
 
 
     def getUserSimulation(self):
@@ -53,13 +56,13 @@ class QuickstartUser(HttpUser):
         """
 
         all_list = []
-        user_times = random.randint(2, 3)
+        user_times = random.randint(0, 2)
         user_randomlist = random.sample(usersimulation_list, user_times)
 
-        game_times = random.randint(1, 2)
+        game_times = random.randint(2, 3)
         game_randomlist = random.sample(game_list, game_times)
 
-        entergame_times = random.randint(0, 1)
+        entergame_times = random.randint(1, 2)
         entergame_randomlist = random.sample(entergame_list, entergame_times)
 
         all_list.extend(user_randomlist)
@@ -190,6 +193,10 @@ class PortalLoginConfig(object):
     def switch_iframe(self):
         frame = self.driver.find_element_by_css_selector('iframe')
         self.driver.switch_to.frame(frame)
+
+    def close_window(self):
+        self.driver.close()
+        self.driver.quit()
 
     def close_window_buffer(self):
         self.driver.close()
