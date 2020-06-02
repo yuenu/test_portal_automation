@@ -344,25 +344,21 @@ class GameHall(PortalLoginConfig):
         time.sleep(1)
         bsp_fish = self.driver.find_element_by_css_selector('[game-box="BspFishCannon"]')  # BSP 千炮捕魚王 3D
         ActionChains(self.driver).move_to_element(bsp_fish).click().perform()
-        time.sleep(10)
+        time.sleep(14)
         self.switch_window()
         time.sleep(2)
         canvas = self.driver.find_element_by_css_selector('.home')
         ActionChains(self.driver).move_to_element_with_offset(canvas, 1100, 150).click().perform()  # 'x'
         time.sleep(1)
         ActionChains(self.driver).move_by_offset(-800, 250).click().perform()  # 點擊0.1元炮場
-        time.sleep(1)
+        time.sleep(5)
         ActionChains(self.driver).move_by_offset(290, 415).click().perform()  # 點擊自動
         time.sleep(1)
         ActionChains(self.driver).move_by_offset(0, 0).click().perform()
         time.sleep(5)
         self.driver.close()
         self.switch_window()
-        self.driver.close()
-        self.switch_window()
-        time.sleep(2)
-        self.driver.find_element_by_css_selector('#logo-bg').click()
-        time.sleep(3)
+        self.close_window_buffer()
 
     def goICGfish(self):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
@@ -387,11 +383,7 @@ class GameHall(PortalLoginConfig):
         time.sleep(5)
         self.driver.close()
         self.switch_window()
-        self.driver.close()
-        self.switch_window()
-        time.sleep(2)
-        self.driver.find_element_by_css_selector('#logo-bg').click()
-        time.sleep(3)
+        self.close_window_buffer()
 
     '''停止代理'''
     # def goYGfish(self):
@@ -420,25 +412,26 @@ class GameHall(PortalLoginConfig):
         ActionChains(self.driver).move_to_element(lobby_sport).click().perform()
         self.driver.find_elements_by_css_selector('.lobbyNav-category [ng-repeat="nav in navInfoList"]')[6].click()  # 捕魚
         time.sleep(1)
-        ka_fish = self.driver.find_element_by_css_selector('[game-box="KaFish"]')  # ICG 龙珠捕鱼
+        ka_fish = self.driver.find_element_by_css_selector('[game-box="KaFish"]')  # KA
         ActionChains(self.driver).move_to_element(ka_fish).click().perform()
         time.sleep(13)
         self.switch_window()
         time.sleep(1)
-        canvas = self.driver.find_element_by_id('GameCanvas')
-        ActionChains(self.driver).move_to_element_with_offset(canvas, 250, 400).click().perform()  # '0.01炮
-        time.sleep(5)
-        ActionChains(self.driver).move_by_offset(1000, 0).click().perform() # 點擊自動射擊
-        time.sleep(1)
-        ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # click dou dou
-        time.sleep(6)
-        self.driver.close()
-        self.switch_window()
-        self.driver.close()
-        self.switch_window()
-        time.sleep(2)
-        self.driver.find_element_by_css_selector('#logo-bg').click()
-        time.sleep(3)
+        try:
+            canvas = self.driver.find_element_by_id('GameCanvas')
+            ActionChains(self.driver).move_to_element_with_offset(canvas, 250, 400).click().perform()  # '0.01炮
+            time.sleep(5)
+            ActionChains(self.driver).move_by_offset(1000, 0).click().perform() # 點擊自動射擊
+            time.sleep(1)
+            ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # click dou dou
+            time.sleep(6)
+        except:
+            pass
+
+        finally:
+            self.driver.close()
+            self.switch_window()
+            self.close_window_buffer()
 
 
     '''
@@ -1016,7 +1009,7 @@ class GameHall(PortalLoginConfig):
             self.driver.find_element_by_xpath('//*[@id="twoGall_Num"]/div[2]/table[2]/tbody/tr[2]/td[1]/table/tbody/tr/td[3]/span/input').send_keys('1')
             time.sleep(1)
             sumbit = self.driver.find_element_by_css_selector('#submit_top')
-            self.driver.execute_script("arguments[0].click();", sumbit) # 確認
+            self.driver.execute_script("arguments[0].click();", sumbit)  # 確認
             time.sleep(1)
             self.driver.find_element_by_css_selector('.buttondiv.confirmBet_yes').click()
 
@@ -1029,6 +1022,9 @@ class GameHall(PortalLoginConfig):
             self.driver.execute_script("arguments[0].click();", sumbit)  # 確認
             time.sleep(1)
             self.driver.find_element_by_css_selector('.buttondiv.confirmBet_yes').click()
+
+        except:
+            print('IG彩票休盤中')
 
         finally:
             time.sleep(6)
@@ -1145,6 +1141,25 @@ class GameHall(PortalLoginConfig):
             self.driver.find_elements_by_css_selector('.betCenter_boardActionBtn___1Slzk')[-1].click()  # 隨選
             time.sleep(2)
             self.driver.find_element_by_css_selector('.betCenter_submitBtn___8dKWz').click()  # 投 注
+        finally:
+            time.sleep(6)
+            self.close_window_buffer()
+
+    def goLXlottery(self):
+        lobby_lottery = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[7]/a')  # "彩票游戏"下拉式選單
+        lx_lottery = self.driver.find_element_by_css_selector('[ng-click="toLxLottery()"]')  # LX利鑫彩票
+        ActionChains(self.driver).move_to_element(lobby_lottery).click(lx_lottery).perform()
+        time.sleep(12)
+        self.switch_window()
+
+        try:
+            self.driver.find_element_by_css_selector('.btn.Random-btn').click()  # 隨機
+            time.sleep(1)
+            self.driver.find_element_by_css_selector('.btn.deter-btn').click()  # 確認下注
+            time.sleep(1)
+            self.driver.find_element_by_css_selector('.ui-dialog-autofocus').click()  # 確定
+        except:
+            print('LX利鑫彩票閉盤中')
         finally:
             time.sleep(6)
             self.close_window_buffer()

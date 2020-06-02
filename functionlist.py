@@ -65,6 +65,8 @@ game_list = [
     'self.game.goMTelgame()',
     'self.game.goGHelgame()',
     'self.game.goICGelgame()',
+    'self.game.goR8elgame()',
+    'self.game.goPPelgame()',
     'self.game.goTHfish()',
     'self.game.goAPfish()',
     'self.game.goGPKfish()',
@@ -77,6 +79,12 @@ game_list = [
     'self.game.goMTfish()',
     'self.game.goICGfish()',
     'self.game.goBSPfish()',
+    'self.game.goIGlottery()',
+    'self.game.goSYlottery()',
+    'self.game.goGPKlotteryvideo()',
+    'self.game.goGPKlottery()',
+    'self.game.goGPK3lottery()',
+    'self.game.goGPK2lottery()',
 ]
 
 entergame_list = [

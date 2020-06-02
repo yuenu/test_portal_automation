@@ -123,19 +123,19 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goPPelgame()
 
         # 捕魚 - 確認ok
-        # self.game.goKAfish()
-        # self.game.goAPfish()
-        # self.game.goGPKfish()
-        # self.game.goFGfish()
-        # self.game.goJDBfish()
-        # self.game.goLEGfish()
-        # self.game.goVGfish()
-        # self.game.goMWfish()
-        # self.game.goFGbird()
-        # self.game.goMTfish()
-        # self.game.goICGfish()
-        # self.game.goBSPfish()
-        # self.game.goTHfish()
+        self.game.goKAfish()
+        self.game.goAPfish()
+        self.game.goGPKfish()
+        self.game.goFGfish()
+        self.game.goJDBfish()
+        self.game.goLEGfish()
+        self.game.goVGfish()
+        self.game.goMWfish()
+        self.game.goFGbird()
+        self.game.goMTfish()
+        self.game.goICGfish()
+        self.game.goBSPfish()
+        self.game.goTHfish()
 
 
         # AB007沒有AB005、AB006有的,已ok
