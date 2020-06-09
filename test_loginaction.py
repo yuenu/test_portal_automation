@@ -18,7 +18,7 @@ class PortalLoginTest(unittest.TestCase):
 
         driver = webdriver.Chrome()
         driver.set_window_size(1080, 800)
-        driver.get('http://www.jp777.net/')
+        driver.get('http://www.fnjtd.com/')
 
         self.portal = PortalLoginConfig(driver)
         self.game = GameHall(driver)
@@ -78,11 +78,12 @@ class PortalLoginTest(unittest.TestCase):
         time.sleep(3)
 
         #  UserSimulation
+        # self.user.SecurityList_sendEmail()
         # self.user.BetRecoed()
         # self.user.Deposit()
         # self.user.Transaction()
         # self.user.WithdrawApplication()
-        # self.user.SecurityList_sendEmail()
+
 
         # 彩票 - 確認ok
         # self.game.goIGlottery()
@@ -91,10 +92,23 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goGPKlottery()
         # self.game.goGPK3lottery()
         # self.game.goGPK2lottery()
+        # self.game.goLXlottery()
 
         # 體育(暫緩，串關定位要研究)
         # self.game.go3singsport()
+        # self.game.goCRsport()
         # self.game.goSABAsport()
+        # self.game.goIMsport()
+        # self.game.goESBsport()
+
+        # 牌類
+        # self.game.goDTboard()
+        # self.game.goTHboard()
+        # self.game.goJDBboard()
+        # self.game.goKGboard()
+        # self.game.goYGboard()
+        # self.game.goNWboard()
+        # self.game.goLEGboard()
 
         # 別種定位 , 複雜定位  目前解決不了
         # self.game.goSGelgame()
@@ -121,21 +135,23 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goICGelgame()
         # self.game.goR8elgame()
         # self.game.goPPelgame()
+        # self.game.goSGelgame()
+        self.game.goBSPelgame()
 
         # 捕魚 - 確認ok
-        self.game.goKAfish()
-        self.game.goAPfish()
-        self.game.goGPKfish()
-        self.game.goFGfish()
-        self.game.goJDBfish()
-        self.game.goLEGfish()
-        self.game.goVGfish()
-        self.game.goMWfish()
-        self.game.goFGbird()
-        self.game.goMTfish()
-        self.game.goICGfish()
-        self.game.goBSPfish()
-        self.game.goTHfish()
+        # self.game.goKAfish()
+        # self.game.goAPfish()
+        # self.game.goGPKfish()
+        # self.game.goFGfish()
+        # self.game.goJDBfish()
+        # self.game.goLEGfish()
+        # self.game.goVGfish()
+        # self.game.goMWfish()
+        # self.game.goFGbird()
+        # self.game.goMTfish()
+        # self.game.goICGfish()
+        # self.game.goBSPfish()
+        # self.game.goTHfish()
 
 
         # AB007沒有AB005、AB006有的,已ok
