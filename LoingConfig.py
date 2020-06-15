@@ -1201,7 +1201,7 @@ class GameHall(PortalLoginConfig):
 
     '''
     
-    体育赛事
+    体育赛事 all-sport
     
     
     '''
@@ -1292,24 +1292,23 @@ class GameHall(PortalLoginConfig):
         lobby_sport = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[6]/a')  # "体育赛事"下拉式選單
         dt_sport = self.driver.find_element_by_css_selector('[ng-click="toDtESport()"]')  #DT泛亚电竞
         ActionChains(self.driver).move_to_element(lobby_sport).click(dt_sport).perform()
-        time.sleep(16)
+        time.sleep(4)
         self.switch_window()
-        frame1 = self.driver.find_element_by_css_selector('#mem_order')
-        self.driver.switch_to.frame(frame1)
-        self.driver.find_element_by_css_selector('#title_parlay').click()
+        ActionChains(self.driver).move_by_offset(290, 415).click().perform()  # 點擊自動
         time.sleep(10)
-        self.driver.switch_to.default_content()
-        frame2 = self.driver.find_element_by_css_selector('#body')
-        self.driver.switch_to.frame(frame2)
-        for i in range(0, 11, 2):
-            self.driver.find_elements_by_css_selector('tbody.tr_content td:nth-child(4) div span span a')[i].click()
-            time.sleep(1)
-        time.sleep(5)
-        ActionChains(self.driver).send_keys('2').perform()
+        self.driver.find_elements_by_css_selector('.tab-text')[3].click()  # 串關
+        time.sleep(3)
+        for i in range(6):
+            self.driver.find_elements_by_css_selector('.el-tooltip.bet-label.bet-box.home-box')[i].click()
+            time.sleep(0.8)
+        time.sleep(3)
+        self.driver.find_elements_by_css_selector('.el-select__caret.el-input__icon.el-icon-arrow-up')[1].click()
         time.sleep(2)
-        ActionChains(self.driver).send_keys(Keys.ENTER).perform()
+        self.driver.find_elements_by_css_selector('.el-select-dropdown__item')[-5].click()
         time.sleep(2)
-        ActionChains(self.driver).send_keys(Keys.ENTER).perform()
+        self.driver.find_element_by_css_selector('.btn.btn-accept').click()
+        time.sleep(8)
+        self.driver.find_element_by_css_selector('.btn.btn-accept').click()
         time.sleep(8)
         self.close_window_buffer()
 
