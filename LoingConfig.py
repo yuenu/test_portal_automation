@@ -490,15 +490,15 @@ class GameHall(PortalLoginConfig):
         lobby_elgame = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
         SG_elgame = self.driver.find_element_by_css_selector('[ng-click="toSgFlash()"]')  # SG电子游艺
         ActionChains(self.driver).move_to_element(lobby_elgame).click(SG_elgame).perform()
-        time.sleep(8)
+        time.sleep(5)
         self.switch_window()
         self.switch_iframe()
         time.sleep(1)
         self.driver.find_element_by_css_selector('[title="金鸡"]').click()
-        time.sleep(4)
+        time.sleep(12)
         self.switch_window()
         self.driver.find_element_by_css_selector('.skip-btn.ng-binding').click()  # 關閉活動頁面
-        time.sleep(12)
+        time.sleep(4)
         ActionChains(self.driver).move_by_offset(-230, 570).click().perform()  # 有活動頁暫先註解
         for j in range(8):
             ActionChains(self.driver).move_by_offset(0, 0).click().perform()
@@ -978,11 +978,12 @@ class GameHall(PortalLoginConfig):
         self.switch_iframe()
         time.sleep(1)
         self.driver.find_element_by_css_selector('[title="欧式轮盘"]').click()
-        time.sleep(3)
+        time.sleep(10)
         self.switch_window()
         self.switch_iframe()
-        self.driver.find_element_by_css_selector('.skip-btn.ng-binding').click()  # 關閉活動頁面
-        time.sleep(10)
+        if self.driver.find_element_by_css_selector('.skip-btn.ng-binding'):
+            self.driver.find_element_by_css_selector('.skip-btn.ng-binding').click()  # 關閉活動頁面
+        time.sleep(5)
         self.switch_window()
         self.switch_iframe()
         self.switch_iframe()

@@ -18,7 +18,7 @@ class PortalLoginTest(unittest.TestCase):
 
         driver = webdriver.Chrome()
         driver.set_window_size(1080, 800)
-        driver.get('http://www.jp777.net/')
+        driver.get('http://www.fnjtd.com/')
 
         self.portal = PortalLoginConfig(driver)
         self.game = GameHall(driver)
@@ -111,20 +111,20 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goLEGboard()
 
         # 別種定位 , 複雜定位  目前解決不了
-        self.game.goSGelgame()
+        # self.game.goSGelgame()
         # self.game.goFBGelgame()
 
         # 電子 - 確認ok
-        # self.game.goPGelgame()
-        # self.game.goTOGelgame()
-        self.game.goAEelgame()
-        # self.game.goSWelgame()
-        # self.game.goDTelgame()
+        self.game.goPGelgame()
+        self.game.goTOGelgame()
+        # self.game.goAEelgame()
+        self.game.goSWelgame()
+        self.game.goDTelgame()
         # self.game.goGPK2elgame()
         # self.game.goJSelgame()
         # self.game.goPTelgame()
         # self.game.goJDBelgame()
-        self.game.goHBelgame()
+        # self.game.goHBelgame()
         # self.game.goSYelgame()
         # self.game.goFGargame()
         # self.game.goGPKelgame()
@@ -136,7 +136,7 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goR8elgame()
         # self.game.goPPelgame()
         # self.game.goSGelgame()
-        self.game.goBSPelgame()
+        # self.game.goBSPelgame()
 
         # 捕魚 - 確認ok
         # self.game.goKAfish()
