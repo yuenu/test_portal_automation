@@ -73,9 +73,7 @@ class PortalLoginTest(unittest.TestCase):
         #     self.portal.logout()
         #     time.sleep(6)
 
-
         self.portal.login()
-        time.sleep(3)
 
         #  UserSimulation
         # self.user.SecurityList_sendEmail()
@@ -90,21 +88,22 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goSYlottery()
         # self.game.goGPKlotteryvideo()
         # self.game.goGPKlottery()
-        # self.game.goGPK3lottery()
+        # self.game.goGPK3lottery()  # 維修
         # self.game.goGPK2lottery()
-        # self.game.goLXlottery()
+        # self.game.goLXlottery() # 沒有錢帶入
 
-        # 體育(暫緩，串關定位要研究)
+        # 體育(串關定位要研究)
         # self.game.go3singsport()
         # self.game.goCRsport()
         # self.game.goSABAsport()
         # self.game.goIMsport()
-        # self.game.goESBsport()
+
+        self.game.goESBsport() # 待修
 
         # 牌類
         # self.game.goDTboard()
         # self.game.goTHboard()
-        # self.game.goJDBboard()
+        # self.game.goJDBboard() #
         # self.game.goKGboard()
         # self.game.goYGboard()
         # self.game.goNWboard()
@@ -115,47 +114,51 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goFBGelgame()
 
         # 電子 - 確認ok
-        self.game.goPGelgame()
-        self.game.goTOGelgame()
+        # self.game.goPGelgame()  #廣告業面
+        # self.game.goTOGelgame()
         # self.game.goAEelgame()
-        self.game.goSWelgame()
-        self.game.goDTelgame()
-        # self.game.goGPK2elgame()
+        # self.game.goSWelgame()
+        # # self.game.goDTelgame()
+        # self.game.goGPK2elgame() # 有彈窗的時候待修改
         # self.game.goJSelgame()
         # self.game.goPTelgame()
         # self.game.goJDBelgame()
         # self.game.goHBelgame()
         # self.game.goSYelgame()
         # self.game.goFGargame()
-        # self.game.goGPKelgame()
+        # self.game.goGPKelgame() # 待修改
         # self.game.goKAelgame()
-        # self.game.goPNGelgame()
-        # self.game.goMTelgame()
+        # self.game.goPNGelgame() # 廣告業面
+        # self.game.goMTelgame() #
         # self.game.goGHelgame()
-        # self.game.goICGelgame()
+        # self.game.goICGelgame() # 待修
         # self.game.goR8elgame()
-        # self.game.goPPelgame()
-        # self.game.goSGelgame()
-        # self.game.goBSPelgame()
+
+        # self.game.goSGelgame() # 改掛VPN
+        # self.game.goPPelgame() # 待修
+        # self.game.goBSPelgame() # 介面已改版
 
         # 捕魚 - 確認ok
         # self.game.goKAfish()
         # self.game.goAPfish()
-        # self.game.goGPKfish()
+        # self.game.goICGfish()
         # self.game.goFGfish()
         # self.game.goJDBfish()
         # self.game.goLEGfish()
         # self.game.goVGfish()
         # self.game.goMWfish()
-        # self.game.goFGbird()
-        # self.game.goMTfish()
-        # self.game.goICGfish()
-        # self.game.goBSPfish()
         # self.game.goTHfish()
+        # self.game.goFGbird() # 活動
+        # self.game.goGPKfish() # 活動
+        # self.game.goMTfish() # 改成需跨區
+
+
+        # self.game.goBSPfish() #維護中
 
 
         # AB007沒有AB005、AB006有的,已ok
         # self.game.goGPK2fish()
+        # self.game.goBBINfish()
 
 if __name__ == "__main__":
     unittest.main()

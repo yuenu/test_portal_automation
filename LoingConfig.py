@@ -8,10 +8,11 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException, UnexpectedAlertPresentException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
-
-
 
 
 class PortalLoginConfig(object):
@@ -22,30 +23,52 @@ class PortalLoginConfig(object):
         self.password = 'a123456'
         self.filepath = f'./recaptcha/captcha.png'
         self.withdrawpassowd = '123456'
+        self.wait = WebDriverWait(driver, 3, poll_frequency=0.25)
 
     def isAnnuncement(self):
-        soup = BeautifulSoup(self.driver.page_source, 'lxml')
-        announcement_element = soup.select('div.show#marquee-wrapper')
-        announcement2 = soup.find_all(class_='modal-overlay modal-show')
-        time.sleep(2)
-        if len(announcement_element) != 0:
-            self.driver.find_element_by_xpath('//*[@id="marquee"]/footer/span').click()
-        else:
+        try:
+            element = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[ng-bind="langs.Common_Closed"]')))
+            self.driver.execute_script("arguments[0].click();", element)
+        except:
             print('None announcement')
 
-        if len(announcement2) != 0:
-            self.driver.find_element_by_xpath('/html/body/div[7]/div[2]/div[2]/i').click()
+        try:
+            element = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.fal.fa-2x.fa-times-circle')))
+            self.driver.execute_script("arguments[0].click();", element)
+        except:
+            pass
+            # print('None announcement2')
+
+        # 舊寫法，改用顯示等待較有彈性
+        # soup = BeautifulSoup(self.driver.page_source, 'lxml')
+        # announcement_element = soup.select('div.show#marquee-wrapper')
+        # announcement2 = soup.find_all(class_='modal-overlay modal-show')
+        # time.sleep(2)
+        # if len(announcement_element) != 0:
+        #     self.driver.find_element_by_xpath('//*[@id="marquee"]/footer/span').click()
+        # else:
+        #     print('None announcement')
+        #
+        # if len(announcement2) != 0:
+        #     self.driver.find_element_by_xpath('/html/body/div[7]/div[2]/div[2]/i').click()
 
     def device_verification(self):
-        soup = BeautifulSoup(self.driver.page_source, 'lxml')
-        device_verification = soup.select('i.fas.fa-times-circle.close')
-        device_verification2 = self.driver.find_elements_by_css_selector('.fas.fa-times-circle.close')
-        time.sleep(0.4)
-        # 裝置驗證彈窗辨識
-        if len(device_verification) != 0 or len(device_verification2) != 0:
-            self.driver.find_element_by_css_selector('.fas.fa-times-circle.close').click()
-        else:
-            time.sleep(3)
+        try:
+            element = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.fas.fa-times-circle.close')))
+            self.driver.execute_script("arguments[0].click();", element)
+        except:
+            pass
+
+        # 舊寫法，改用顯示等待較有彈性
+        # soup = BeautifulSoup(self.driver.page_source, 'lxml')
+        # device_verification = soup.select('i.fas.fa-times-circle.close')
+        # device_verification2 = self.driver.find_elements_by_css_selector('.fas.fa-times-circle.close')
+        # time.sleep(0.4)
+        # # 裝置驗證彈窗辨識
+        # if len(device_verification) != 0 or len(device_verification2) != 0:
+        #     self.driver.find_element_by_css_selector('.fas.fa-times-circle.close').click()
+        # else:
+        #     time.sleep(3)
 
 
     def sendUserInfo(self, account, password):
@@ -57,18 +80,20 @@ class PortalLoginConfig(object):
         self.driver.find_element_by_css_selector('#login_code').click()
         time.sleep(2)
         soup = BeautifulSoup(self.driver.page_source, 'lxml')
-        imgstring = soup.select('#captcha')[0].get('ng-src')[22:]
-        imgdata = base64.b64decode(imgstring)
+        imagestring = soup.select('#captcha')[0].get('ng-src')[22:]
+        imagedata = base64.b64decode(imagestring)
         try:
             with open(self.filepath, 'wb') as f:
-                f.write(imgdata)
+                f.write(imagedata)
 
         except UnidentifiedImageError:
             self.driver.find_element_by_css_selector('#login_code').click()
             time.sleep(2.5)
             soup = BeautifulSoup(self.driver.page_source, 'lxml')
-            imgstring = soup.select('#captcha')[0].get('ng-src')[22:]
-            imgdata = base64.b64decode(imgstring)
+            imagestring = soup.select('#captcha')[0].get('ng-src')[22:]
+            imagedata = base64.b64decode(imagestring)
+            with open(self.filepath, 'wb') as f:
+                f.write(imagedata)
 
         captcha_code = idenitfy_img(self.filepath)
         if len(captcha_code) == 4:
@@ -79,7 +104,6 @@ class PortalLoginConfig(object):
 
     def clickLoginIn(self):
         self.driver.find_element_by_css_selector('#login-box').click()
-        time.sleep(1.5)
         self.device_verification()
         self.isAnnuncement()
 
@@ -105,7 +129,6 @@ class PortalLoginConfig(object):
                     time.sleep(1)
                     self.driver.find_element_by_xpath('//*[@id="cms-modal-input"]').send_keys(self.withdrawpassowd)
                     self.driver.find_element_by_css_selector('[ng-click="ok()"]').click()
-                    time.sleep(2)
                     self.device_verification()
                     self.isAnnuncement()
                 else:
@@ -133,8 +156,8 @@ class PortalLoginConfig(object):
         self.driver.switch_to.frame(frame)
 
     def switch_iframe(self):
-        frame = self.driver.find_element_by_css_selector('iframe')
-        self.driver.switch_to.frame(frame)
+        iframe = self.driver.find_element_by_css_selector('iframe')
+        self.driver.switch_to.frame(iframe)
 
     def close_window_buffer(self):
         self.driver.close()
@@ -143,6 +166,16 @@ class PortalLoginConfig(object):
         click_space = self.driver.find_element_by_css_selector('.top-header .wrapper')
         ActionChains(self.driver).move_to_element_with_offset(click_space, 600, 15).click().perform()
         time.sleep(2)
+
+    def detect_maintain(self):
+        try:
+            maintain = self.driver.find_element_by_css_selector('.maintain').text
+            if '系统维护中' in maintain:
+                print(maintain)
+                self.driver.close()
+                self.driver.quit()
+        except:
+            pass
 
 
 class GameHall(PortalLoginConfig):
@@ -182,7 +215,7 @@ class GameHall(PortalLoginConfig):
         lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
         FG_fish = self.driver.find_element_by_css_selector('[game-box="fg-beauty"]')  # FG美人捕鱼
         ActionChains(self.driver).move_to_element(lobby_fish).click(FG_fish).perform()
-        time.sleep(12)
+        self.driver.implicitly_wait(10)
         self.switch_window()
         time.sleep(2)
         canvas = self.driver.find_element_by_id('GameCanvas')
@@ -210,26 +243,19 @@ class GameHall(PortalLoginConfig):
         self.close_window_buffer()
 
     def goGPK2fish(self):
-        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[5]/a')  # "电子游艺"下拉式選單
-        GPK_elgame = self.driver.find_element_by_css_selector('[ng-click="toGpkSlot()"]')  # GPK电子游艺
-        ActionChains(self.driver).move_to_element(lobby_fish).click(GPK_elgame).perform()
-        time.sleep(5)
+        lobby_fish = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "电子游艺"下拉式選單
+        GPK2_fish = self.driver.find_element_by_css_selector('[ng-click="toGpk2Fish()"]')  # GPK电子游艺
+        ActionChains(self.driver).move_to_element(lobby_fish).click(GPK2_fish).perform()
+        time.sleep(13)
         self.switch_window()
         time.sleep(1)
-        lobby_sport = self.driver.find_element_by_css_selector('.lobbyNav-pager')  # 導航
-        ActionChains(self.driver).move_to_element(lobby_sport).click().perform()
-        self.driver.find_elements_by_css_selector('.lobbyNav-category [ng-repeat="nav in navInfoList"]')[
-            6].click()  # 捕魚
-        bsp_fish = self.driver.find_element_by_css_selector('[game-box="BspFishCannon"]')  # BSP 千炮捕魚王 3D
-        ActionChains(self.driver).move_to_element(bsp_fish).click().perform()
-        time.sleep(18)
-        self.switch_window()
-        time.sleep(1)
-        canvas = self.driver.find_element_by_id('view')
-        ActionChains(self.driver).move_to_element_with_offset(canvas, 1000, 650).click().perform()  # 點擊進入遊戲
-        time.sleep(3)
-        ActionChains(self.driver).move_by_offset(-500, -300).click().perform()  # 點擊0.01
-        time.sleep(8)
+        canvas = self.driver.find_element_by_id('gamec')
+        ActionChains(self.driver).move_to_element_with_offset(canvas, 1000, 720).click().perform()  # 確認玩家身分
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(220, -590).click().perform()  # 排行榜 點擊'x'
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(-700, 300).click().perform()
+        time.sleep(6)
         for j in range(50):
             ActionChains(self.driver).move_by_offset(0, 0).click().perform()  # 發炮
         time.sleep(10)
@@ -348,6 +374,7 @@ class GameHall(PortalLoginConfig):
         ActionChains(self.driver).move_to_element(bsp_fish).click().perform()
         time.sleep(12)
         self.switch_window()
+        self.detect_maintain()
         time.sleep(2)
         canvas = self.driver.find_element_by_css_selector('.home')
         ActionChains(self.driver).move_to_element_with_offset(canvas, 1100, 150).click().perform()  # 'x'
@@ -377,6 +404,7 @@ class GameHall(PortalLoginConfig):
         ActionChains(self.driver).move_to_element(icg_fish).click().perform()
         time.sleep(10)
         self.switch_window()
+        self.switch_iframe()
         canvas = self.driver.find_element_by_id('GameCanvas')
         ActionChains(self.driver).move_to_element_with_offset(canvas, 250, 400).click().perform()  # '0.01炮場'
         time.sleep(10)
@@ -435,6 +463,35 @@ class GameHall(PortalLoginConfig):
             self.switch_window()
             self.close_window_buffer()
 
+    def goBBINfish(self):
+        lobby = self.driver.find_element_by_xpath('//*[@id="nav"]/ul/li[3]/a')  # "捕鱼游戏"下拉式選單
+        fish = self.driver.find_element_by_css_selector('[ng-click="toBbFish2()"]')  # BBIN捕鱼大师
+        ActionChains(self.driver).move_to_element(lobby).click(fish).perform()
+        time.sleep(12)
+        self.switch_window()
+        details = self.driver.find_element_by_css_selector('#details-button')
+        proceed = self.driver.find_element_by_css_selector('#proceed-link')
+        if details:
+            for j in range(2):
+                details.click()
+                time.sleep(1)
+                proceed.click()
+                time.sleep(5)
+                self.switch_window()
+        else:
+            pass
+        time.sleep(2)
+        canvas = self.driver.find_element_by_id('gameCanvas')
+        ActionChains(self.driver).move_to_element_with_offset(canvas, 150, 250).click().perform()  # 點擊0.1元炮場
+        time.sleep(6)
+        ActionChains(self.driver).move_by_offset(390, 170).click().perform()  # 500
+        time.sleep(2)
+        ActionChains(self.driver).move_by_offset(160, 120).click().perform()  # confirm
+        time.sleep(2)
+        for i in range(50):
+            ActionChains(self.driver).move_to_element_with_offset(canvas, 150, 250).click().perform()
+        time.sleep(6)
+        self.close_window_buffer()
 
     '''
     电子游艺 (AB005)
@@ -738,6 +795,9 @@ class GameHall(PortalLoginConfig):
         self.switch_window()
         self.switch_iframe()
         time.sleep(1)
+        element = self.driver.find_element_by_css_selector('.modal-inner')
+        ActionChains(self.driver).move_to_element_with_offset(element, 20, 20).click().perform()
+        time.sleep(1)
         self.driver.find_element_by_css_selector('.spinButton').click()
         time.sleep(8)
         self.close_window_buffer()
@@ -757,7 +817,7 @@ class GameHall(PortalLoginConfig):
         time.sleep(1)
         canvas = self.driver.find_element_by_css_selector('canvas')
         ActionChains(self.driver).move_to_element_with_offset(canvas, 650, 750).click().perform()
-        time.sleep(8)
+        time.sleep(12)
         self.close_window_buffer()
 
     def goSYelgame(self):
@@ -1059,8 +1119,8 @@ class GameHall(PortalLoginConfig):
             time.sleep(1)
             self.driver.find_element_by_css_selector('.buttondiv.confirmBet_yes').click()
 
-        except:
-            print('IG彩票休盤中')
+        except UnexpectedAlertPresentException:
+            print('IG彩票已经关盘')
 
         finally:
             time.sleep(6)
@@ -1318,11 +1378,12 @@ class GameHall(PortalLoginConfig):
         im_sport = self.driver.find_element_by_css_selector('[ng-click="toImsSport()"]')  # IM体育
         ActionChains(self.driver).move_to_element(lobby_sport).click(im_sport).perform()
         time.sleep(12)
+        self.detect_maintain()
         self.switch_window()
         time.sleep(1)
         self.driver.find_elements_by_css_selector('.tab_label')[2].click()
         time.sleep(5)
-        for i in range(2, 11, 2):
+        for i in range(2, 9, 2):
             self.driver.find_elements_by_css_selector(f'.event_listing:nth-child({i}) .row_normal:nth-child(1) .event_row:nth-child(1) .event_even:nth-child(3) div:nth-child(1) span')[0].click()
             time.sleep(1)
         time.sleep(3)
@@ -1339,11 +1400,16 @@ class GameHall(PortalLoginConfig):
         time.sleep(12)
         self.switch_window()
         time.sleep(3)
-        for i in range(2, 11, 2):
-            self.driver.find_elements_by_css_selector('.eachItem_gamelist')[i].click()
+        for i in range(5):
+            self.driver.find_elements_by_css_selector('.eachItem_gamelist')[i+1].click()
             time.sleep(3)
             try:
-                self.driver.find_elements_by_css_selector('.parlayAddButton')[0].click()
+                if len(self.driver.find_elements_by_css_selector('.parlayAddButton')) != 0:
+                    self.driver.find_elements_by_css_selector('.parlayAddButton')[0].click()
+                else:
+                    time.sleep(1)
+                    self.driver.find_element_by_css_selector('.homeBtn_style').click()
+                    self.driver.find_elements_by_css_selector('.eachItem_gamelist')[i+4].click()
             except:
                 pass
             time.sleep(1)
@@ -1351,6 +1417,11 @@ class GameHall(PortalLoginConfig):
             time.sleep(2)
         time.sleep(2)
         self.driver.find_element_by_css_selector('.float_button.parlay_button').click()
+        time.sleep(2)
+        for j in range(3):
+            if int(self.driver.find_element_by_css_selector('.market_num_pad').text.strip('+')) >= 4:
+                self.driver.find_elements_by_css_selector('.delete_icon.active')[0].click()
+                time.sleep(0.5)
         time.sleep(2)
         self.driver.find_element_by_css_selector('.confirmButton').click()
         time.sleep(2)
