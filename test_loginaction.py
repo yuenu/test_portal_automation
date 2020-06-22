@@ -15,10 +15,12 @@ class PortalLoginTest(unittest.TestCase):
         AB006 - http://www.rfben.com/
         AB007 - http://www.jp777.net/
         """
-
-        driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.add_argument('--ignore-certificate-errors')
+        options.add_argument('--ignore-ssl-errors')
+        driver = webdriver.Chrome(chrome_options=options)
         driver.set_window_size(1080, 800)
-        driver.get('http://www.fnjtd.com/')
+        driver.get('http://www.jp777.net/')
 
         self.portal = PortalLoginConfig(driver)
         self.game = GameHall(driver)
@@ -74,6 +76,7 @@ class PortalLoginTest(unittest.TestCase):
         #     time.sleep(6)
 
         self.portal.login()
+        time.sleep(2)
 
         #  UserSimulation
         # self.user.SecurityList_sendEmail()
@@ -82,63 +85,64 @@ class PortalLoginTest(unittest.TestCase):
         # self.user.Transaction()
         # self.user.WithdrawApplication()
 
-
-        # 彩票 - 確認ok
+        # 彩票 - 確認ok 0622test
         # self.game.goIGlottery()
         # self.game.goSYlottery()
         # self.game.goGPKlotteryvideo()
         # self.game.goGPKlottery()
-        # self.game.goGPK3lottery()  # 維修
         # self.game.goGPK2lottery()
-        # self.game.goLXlottery() # 沒有錢帶入
+        # self.game.goLXlottery()
+        # self.game.goGPK3lottery()  # 維修,應該已經不合作
 
-        # 體育(串關定位要研究)
-        # self.game.go3singsport()
-        # self.game.goCRsport()
+        # 體育(串關定位要研究) 0622test
         # self.game.goSABAsport()
         # self.game.goIMsport()
+        # self.game.goESBsport()
+        # self.game.go3singsport()
+        # self.game.goBBINsport()
+        # self.game.goDTsport()  # 錢無法代入
+        # self.game.goCRsport()  # 有時候單沒送出
 
-        self.game.goESBsport() # 待修
-
-        # 牌類
+        # 牌類 0622test
+        # self.game.goJDBboard()
         # self.game.goDTboard()
-        # self.game.goTHboard()
-        # self.game.goJDBboard() #
         # self.game.goKGboard()
         # self.game.goYGboard()
         # self.game.goNWboard()
         # self.game.goLEGboard()
+        # self.game.goTHboard()  # 沒開場
+        # self.game.goAPboard()
+        # self.game.goBSPboard()
 
         # 別種定位 , 複雜定位  目前解決不了
-        # self.game.goSGelgame()
-        # self.game.goFBGelgame()
+        # self.game.goFBGelgame()  # 待修
 
-        # 電子 - 確認ok
-        # self.game.goPGelgame()  #廣告業面
+        # 電子 - 確認ok 0622test
+        # self.game.goPGelgame()
         # self.game.goTOGelgame()
         # self.game.goAEelgame()
         # self.game.goSWelgame()
-        # # self.game.goDTelgame()
-        # self.game.goGPK2elgame() # 有彈窗的時候待修改
-        # self.game.goJSelgame()
+        # self.game.goDTelgame()
         # self.game.goPTelgame()
         # self.game.goJDBelgame()
         # self.game.goHBelgame()
         # self.game.goSYelgame()
-        # self.game.goFGargame()
-        # self.game.goGPKelgame() # 待修改
         # self.game.goKAelgame()
-        # self.game.goPNGelgame() # 廣告業面
-        # self.game.goMTelgame() #
         # self.game.goGHelgame()
-        # self.game.goICGelgame() # 待修
         # self.game.goR8elgame()
+        # self.game.goSGelgame()
+        # self.game.goGPKelgame()
+        # self.game.goPNGelgame()
+        # self.game.goPPelgame()
+        # self.game.goICGelgame()
+        # self.game.goBSPelgame()
+        # self.game.goJSelgame()
+        # self.game.goGPK2elgame()
 
-        # self.game.goSGelgame() # 改掛VPN
-        # self.game.goPPelgame() # 待修
-        # self.game.goBSPelgame() # 介面已改版
+        # self.game.goMTelgame()  # 改掛VPN
+        # self.game.goFGargame()  # FG街機維修很久了
 
-        # 捕魚 - 確認ok
+        # 捕魚 - 確認ok 0622test
         # self.game.goKAfish()
         # self.game.goAPfish()
         # self.game.goICGfish()
@@ -147,18 +151,18 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goLEGfish()
         # self.game.goVGfish()
         # self.game.goMWfish()
-        # self.game.goTHfish()
-        # self.game.goFGbird() # 活動
-        # self.game.goGPKfish() # 活動
-        # self.game.goMTfish() # 改成需跨區
-
-
-        # self.game.goBSPfish() #維護中
-
-
-        # AB007沒有AB005、AB006有的,已ok
         # self.game.goGPK2fish()
-        # self.game.goBBINfish()
+        # self.game.goTHfish()
+        # self.game.goFGbird()
+        # self.game.goGPKfish()
+        # self.game.goBSPfish()
+        # self.game.goBBINfish()  # 待修 要兌換分數 麻煩
+
+
+        #須掛VPN
+        # self.game.goBGfish()
+        # self.game.goCQ9fish()
+        # self.game.goMTfish() # 改成需跨區
 
 if __name__ == "__main__":
     unittest.main()
