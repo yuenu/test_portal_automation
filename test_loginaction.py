@@ -18,14 +18,15 @@ class PortalLoginTest(unittest.TestCase):
         options = webdriver.ChromeOptions()
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--ignore-ssl-errors')
+        url = 'http://www.fnjtd.com/'
         driver = webdriver.Chrome(chrome_options=options)
         driver.set_window_size(1080, 800)
-        driver.get('http://www.jp777.net/')
+        driver.get(url)
 
-        self.portal = PortalLoginConfig(driver)
-        self.game = GameHall(driver)
-        self.user = UserSimulation(driver)
-        self.entergame = entergmae(driver)
+        self.portal = PortalLoginConfig(driver, url)
+        self.game = GameHall(driver, url)
+        self.user = UserSimulation(driver, url)
+        self.entergame = entergmae(driver, url)
         self.filepath = f'./recaptcha/captcha.png'
         self.password = 'a654321'
 
@@ -98,9 +99,8 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goSABAsport()
         # self.game.goIMsport()
         # self.game.goESBsport()
-        # self.game.go3singsport()
-        # self.game.goBBINsport()
-        # self.game.goDTsport()  # 錢無法代入
+        # self.game.go3singsport() #
+        # self.game.goBBINsport() #
         # self.game.goCRsport()  # 有時候單沒送出
 
         # 牌類 0622test
@@ -110,55 +110,61 @@ class PortalLoginTest(unittest.TestCase):
         # self.game.goYGboard()
         # self.game.goNWboard()
         # self.game.goLEGboard()
-        # self.game.goTHboard()  # 沒開場
         # self.game.goAPboard()
         # self.game.goBSPboard()
+        # self.game.goTHboard()  # 沒開場
+        # self.game.goJSboard() # 06不要跑
 
         # 別種定位 , 複雜定位  目前解決不了
         # self.game.goFBGelgame()  # 待修
 
         # 電子 - 確認ok 0622test
-        # self.game.goPGelgame()
+        # 05.06.07都可以
+
         # self.game.goTOGelgame()
         # self.game.goAEelgame()
         # self.game.goSWelgame()
-        # self.game.goDTelgame()
-        # self.game.goPTelgame()
-        # self.game.goJDBelgame()
-        # self.game.goHBelgame()
         # self.game.goSYelgame()
-        # self.game.goKAelgame()
-        # self.game.goGHelgame()
-        # self.game.goR8elgame()
+        # self.game.goPTelgame()
         # self.game.goSGelgame()
-        # self.game.goGPKelgame()
-        # self.game.goPNGelgame()
         # self.game.goPPelgame()
         # self.game.goICGelgame()
         # self.game.goBSPelgame()
+        # self.game.goGPKelgame()
+        # self.game.goJDBelgame()
+        # self.game.goHBelgame()
+        # self.game.goDTelgame()
+        # self.game.goPGelgame()
+        # #
+        # self.game.goKAelgame()
+        # self.game.goGHelgame()
+        # self.game.goR8elgame()
+        # self.game.goPNGelgame()
         # self.game.goJSelgame()
         # self.game.goGPK2elgame()
-
         # self.game.goMTelgame()  # 改掛VPN
         # self.game.goFGargame()  # FG街機維修很久了
 
-        # 捕魚 - 確認ok 0622test
-        # self.game.goKAfish()
-        # self.game.goAPfish()
+        # 捕魚 - 確認ok 0624test
+        self.game.goKAfish()
         # self.game.goICGfish()
+        # self.game.goAPfish()
         # self.game.goFGfish()
         # self.game.goJDBfish()
         # self.game.goLEGfish()
         # self.game.goVGfish()
         # self.game.goMWfish()
         # self.game.goGPK2fish()
-        # self.game.goTHfish()
         # self.game.goFGbird()
         # self.game.goGPKfish()
         # self.game.goBSPfish()
+        # self.game.goTHfish()
+
         # self.game.goBBINfish()  # 待修 要兌換分數 麻煩
 
-
+        # self.game.go07ICGfish()
+        # self.game.go07KAfish()
+        # self.game.go07BSPfish()
         #須掛VPN
         # self.game.goBGfish()
         # self.game.goCQ9fish()
